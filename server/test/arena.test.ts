@@ -374,3 +374,4 @@ describe('Chess Arena Multiplayer & Tournament Rules', () => {
     expect(walkoverMatch?.winner).toBe('white');
   });
 });
+

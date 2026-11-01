@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Trophy, Flag, Award, Copy, Check, RotateCcw } from 'lucide-react';
+import { Trophy, Flag, Award, RotateCcw } from 'lucide-react';
 import type { MatchResult, PlayerColor } from '../types/index';
 import { soundManager } from '../utils/sound';
 
 interface GameOverModalProps {
   result: MatchResult;
   myColor: PlayerColor;
-  pgn: string;
   totalMoves: number;
   onReturnToEntry: () => void;
 }
@@ -15,12 +14,9 @@ interface GameOverModalProps {
 export const GameOverModal: React.FC<GameOverModalProps> = ({
   result,
   myColor,
-  pgn,
   totalMoves,
   onReturnToEntry,
 }) => {
-  const [copied, setCopied] = useState(false);
-
   const isDraw = result.winner === 'draw';
   const isWinner =
     (result.winner === 'white' && myColor === 'w') ||
@@ -38,14 +34,6 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
       });
     }
   }, [isWinner]);
-
-  const copyPgnToClipboard = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(pgn);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   const getReasonLabel = (reason: string) => {
     switch (reason) {
@@ -122,25 +110,6 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
             </div>
           </div>
         </div>
-
-        {/* PGN Summary */}
-        {pgn && (
-          <div className="mb-6 text-left">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs font-medium text-[#9E9689]">Match PGN</span>
-              <button
-                onClick={copyPgnToClipboard}
-                className="flex items-center gap-1 text-[11px] text-[#D9A441] hover:text-[#F5C66A] transition-colors cursor-pointer"
-              >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copied ? 'Copied' : 'Copy PGN'}</span>
-              </button>
-            </div>
-            <div className="p-3 rounded-xl bg-[#12100E] border border-[#2A241F] max-h-24 overflow-y-auto text-xs font-mono text-[#9E9689] select-all">
-              {pgn}
-            </div>
-          </div>
-        )}
 
         {/* Actions */}
         <button

@@ -411,3 +411,4 @@ export const ChessPiece: React.FC<ChessPieceProps> = ({
     </div>
   );
 };
+

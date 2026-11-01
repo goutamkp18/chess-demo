@@ -232,3 +232,4 @@ class ChessArenaDatabase {
 }
 
 export const db = new ChessArenaDatabase();
+

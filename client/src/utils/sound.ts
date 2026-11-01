@@ -186,3 +186,4 @@ class ChessSoundManager {
 }
 
 export const soundManager = new ChessSoundManager();
+

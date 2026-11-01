@@ -437,7 +437,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         <GameOverModal
           result={roomState.result}
           myColor={myColor}
-          pgn={roomState.pgn}
           totalMoves={roomState.history.length}
           onReturnToEntry={onExit}
         />

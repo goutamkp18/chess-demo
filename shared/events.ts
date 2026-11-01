@@ -26,3 +26,4 @@ export const SOCKET_EVENTS = {
   MATCH_OVER: 'match:over',
   ERROR: 'system:error',
 } as const;
+
