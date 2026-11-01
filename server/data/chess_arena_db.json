@@ -33,6 +33,17 @@
       "createdAt": 1793506993178,
       "status": "WAITING_FOR_OPPONENT"
     },
+    "9876": {
+      "roomId": "9876",
+      "passwordHash": "$2a$10$7XqY0LbuSpWUfR.uqMw.x.Sh0uOoMZrV2X3Puqr2xwu.J9z/XOuM2",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793508014434,
+      "status": "WAITING_FOR_OPPONENT"
+    },
     "11111": {
       "roomId": "11111",
       "passwordHash": "$2a$10$qIoVAbK2Tyb6KZZ/bOPDpusHL7GcOoD1eQz0x3Ls0f.zkgToSWkty",
@@ -53,6 +64,17 @@
         "name": "10 + 5 Blitz"
       },
       "createdAt": 1793507492565,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "1234567": {
+      "roomId": "1234567",
+      "passwordHash": "$2a$10$mtlY1Nt95aQq2viBgANdDO46kVVWI3ITyir4yjYJlGfzDMJVFp3Cq",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793508126929,
       "status": "WAITING_FOR_OPPONENT"
     },
     "TEST_ROOM_101": {
@@ -152,6 +174,17 @@
         "name": "10 + 5 Blitz"
       },
       "createdAt": 1793506215668,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "0213": {
+      "roomId": "0213",
+      "passwordHash": "$2a$10$X82DL0ZhTwc3O0rdqlmWwu.3OOFi.UYqYTSXyLs5DuU4j4HanjscC",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793508219095,
       "status": "WAITING_FOR_OPPONENT"
     }
   },
@@ -373,6 +406,50 @@
       "reason": "resignation",
       "startTime": 1793507873234,
       "endTime": 1793507873309,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    },
+    "match_1234567_1793508126929": {
+      "matchId": "match_1234567_1793508126929",
+      "roomId": "1234567",
+      "whitePlayer": {
+        "id": "p_1793508126932_4h4d",
+        "name": "123456",
+        "rating": 1600
+      },
+      "blackPlayer": {
+        "id": "p_1793508134000_d78l",
+        "name": "123456789",
+        "rating": 1600
+      },
+      "status": "COMPLETED",
+      "winner": "white",
+      "reason": "resignation",
+      "startTime": 1793508139619,
+      "endTime": 1793508147531,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    },
+    "match_0213_1793508219095": {
+      "matchId": "match_0213_1793508219095",
+      "roomId": "0213",
+      "whitePlayer": {
+        "id": "p_1793508219100_e7kc",
+        "name": "nithish",
+        "rating": 1600
+      },
+      "blackPlayer": {
+        "id": "p_1793508229345_nt9h",
+        "name": "nandan",
+        "rating": 1600
+      },
+      "status": "COMPLETED",
+      "winner": "black",
+      "reason": "resignation",
+      "startTime": 1793508235568,
+      "endTime": 1793508244526,
       "moves": [],
       "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
       "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
