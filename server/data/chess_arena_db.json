@@ -1,0 +1,145 @@
+{
+  "rooms": {
+    "TEST_ROOM_101": {
+      "roomId": "TEST_ROOM_101",
+      "passwordHash": "$2a$10$.mtpIJ88RnHHehpUbnlEOe3njLNbKnywCplglmjq9ND/8F0bUzkRq",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506213590,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "TEST_ROOM_102": {
+      "roomId": "TEST_ROOM_102",
+      "passwordHash": "$2a$10$bJf2.MB1XxmqZo3PukUXLOLe0NvNk3nFLS1vzaxP2Oo5oZ13X14Wu",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506213832,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "TEST_ROOM_WALKOVER": {
+      "roomId": "TEST_ROOM_WALKOVER",
+      "passwordHash": "$2a$10$wH2FFw/VSLqLLTj2V.fhN.BNK0DOPxbV3JoOq.y0IeaCsBpblg6Pi",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506214105,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "TEST_ROOM_FULL": {
+      "roomId": "TEST_ROOM_FULL",
+      "passwordHash": "$2a$10$LVFwjr0wcYQtGm7FuK9gHun3LOc1bpmCioaGTVnRfrh8qQ92EeqJy",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506214269,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "TEST_ROOM_RECONNECT": {
+      "roomId": "TEST_ROOM_RECONNECT",
+      "passwordHash": "$2a$10$bFOaLKxq9dHIA30wjaVfY./v.R29SEaVEdhogK2o2nJAn8uo.K.Im",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506214553,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "TEST_ROOM_RESIGN": {
+      "roomId": "TEST_ROOM_RESIGN",
+      "passwordHash": "$2a$10$6GfMnuWAeLAfy07AF3eqIOoFtWg5JaI5.cEUiyXS/Ki7wrfHPpe8S",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506214902,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "ROOM_1001": {
+      "roomId": "ROOM_1001",
+      "passwordHash": "$2a$10$rn0lb7rLxpqRBdm7h/25wu31inH3me6UYTEfVHA7UeY4eePCKt72m",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506215180,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "ROOM_1002": {
+      "roomId": "ROOM_1002",
+      "passwordHash": "$2a$10$83V1ljCXst/2ikUdO4Hqdu88qGf.QaP/78hRrS9i8Zfwcmwc9u9ca",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506215394,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "ROOM_1003": {
+      "roomId": "ROOM_1003",
+      "passwordHash": "$2a$10$Onv9ClKVlHKPLa.cDLwiZ.X7Jk4y9xiOPYItF8Tz7r0.5IOlTfdwa",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793506215668,
+      "status": "WAITING_FOR_OPPONENT"
+    }
+  },
+  "matches": {
+    "match_TEST_ROOM_WALKOVER_1793506214105": {
+      "matchId": "match_TEST_ROOM_WALKOVER_1793506214105",
+      "roomId": "TEST_ROOM_WALKOVER",
+      "whitePlayer": {
+        "id": "p_1793506214106_htjh",
+        "name": "Patient Player",
+        "rating": 1600
+      },
+      "blackPlayer": null,
+      "status": "WALKOVER",
+      "winner": "white",
+      "reason": "walkover",
+      "startTime": null,
+      "endTime": 1793506214107,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    },
+    "match_TEST_ROOM_RESIGN_1793506214902": {
+      "matchId": "match_TEST_ROOM_RESIGN_1793506214902",
+      "roomId": "TEST_ROOM_RESIGN",
+      "whitePlayer": {
+        "id": "p_1793506214903_y0al",
+        "name": "Quitter",
+        "rating": 1600
+      },
+      "blackPlayer": {
+        "id": "p_1793506214994_84un",
+        "name": "Victor",
+        "rating": 1600
+      },
+      "status": "COMPLETED",
+      "winner": "black",
+      "reason": "resignation",
+      "startTime": 1793506214995,
+      "endTime": 1793506215058,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    }
+  }
+}
