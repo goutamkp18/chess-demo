@@ -19,14 +19,21 @@ export function App() {
 
   // Setup real-time socket listeners
   useEffect(() => {
-    const socket = socketService.getSocket();
-
     const handleRoomUpdated = (payload: { roomState: RoomState }) => {
       setRoomState(payload.roomState);
     };
 
-    const handleOpponentJoined = () => {
+    const handleOpponentJoined = (payload?: { player?: PlayerProfile }) => {
       soundManager.playClick();
+      setRoomState((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          status: 'READY_CONFIRMATION',
+          blackPlayer: payload?.player || prev.blackPlayer,
+          waitingDeadline: null,
+        };
+      });
     };
 
     const handleMatchStarted = (payload: { fen: string; clocks: any; timeControl: any }) => {
@@ -54,18 +61,18 @@ export function App() {
       setRoomState((prev) => (prev ? { ...prev, status: 'COMPLETED', result: payload.result } : prev));
     };
 
-    socket.on(SOCKET_EVENTS.ROOM_UPDATED, handleRoomUpdated);
-    socket.on(SOCKET_EVENTS.OPPONENT_JOINED, handleOpponentJoined);
-    socket.on(SOCKET_EVENTS.MATCH_STARTED, handleMatchStarted);
-    socket.on(SOCKET_EVENTS.MOVE_MADE, handleMoveMade);
-    socket.on(SOCKET_EVENTS.MATCH_OVER, handleMatchOver);
+    socketService.on(SOCKET_EVENTS.ROOM_UPDATED, handleRoomUpdated);
+    socketService.on(SOCKET_EVENTS.OPPONENT_JOINED, handleOpponentJoined);
+    socketService.on(SOCKET_EVENTS.MATCH_STARTED, handleMatchStarted);
+    socketService.on(SOCKET_EVENTS.MOVE_MADE, handleMoveMade);
+    socketService.on(SOCKET_EVENTS.MATCH_OVER, handleMatchOver);
 
     return () => {
-      socket.off(SOCKET_EVENTS.ROOM_UPDATED, handleRoomUpdated);
-      socket.off(SOCKET_EVENTS.OPPONENT_JOINED, handleOpponentJoined);
-      socket.off(SOCKET_EVENTS.MATCH_STARTED, handleMatchStarted);
-      socket.off(SOCKET_EVENTS.MOVE_MADE, handleMoveMade);
-      socket.off(SOCKET_EVENTS.MATCH_OVER, handleMatchOver);
+      socketService.off(SOCKET_EVENTS.ROOM_UPDATED, handleRoomUpdated);
+      socketService.off(SOCKET_EVENTS.OPPONENT_JOINED, handleOpponentJoined);
+      socketService.off(SOCKET_EVENTS.MATCH_STARTED, handleMatchStarted);
+      socketService.off(SOCKET_EVENTS.MOVE_MADE, handleMoveMade);
+      socketService.off(SOCKET_EVENTS.MATCH_OVER, handleMatchOver);
     };
   }, []);
 
@@ -129,7 +136,9 @@ export function App() {
   };
 
   const handleExit = () => {
-    socketService.disconnect();
+    if (roomId) {
+      socketService.leaveRoom(roomId);
+    }
     setInRoom(false);
     setRoomState(null);
     setRoomId('');

@@ -33,6 +33,28 @@
       "createdAt": 1793506993178,
       "status": "WAITING_FOR_OPPONENT"
     },
+    "11111": {
+      "roomId": "11111",
+      "passwordHash": "$2a$10$qIoVAbK2Tyb6KZZ/bOPDpusHL7GcOoD1eQz0x3Ls0f.zkgToSWkty",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793507537605,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "123456": {
+      "roomId": "123456",
+      "passwordHash": "$2a$10$4Phb/opTzUdmwx37jPePEuCvw.oURFXJGxgDw6a8Ggju29m/RbQRG",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1793507492565,
+      "status": "WAITING_FOR_OPPONENT"
+    },
     "TEST_ROOM_101": {
       "roomId": "TEST_ROOM_101",
       "passwordHash": "$2a$10$.mtpIJ88RnHHehpUbnlEOe3njLNbKnywCplglmjq9ND/8F0bUzkRq",
@@ -314,6 +336,46 @@
       ],
       "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. h4 h5 2. Nf3 Nf6 3. d4 d5 *",
       "fen": "rnbqkb1r/ppp1ppp1/5n2/3p3p/3P3P/5N2/PPP1PPP1/RNBQKB1R w KQkq - 0 4"
+    },
+    "match_TEST_ROOM_WALKOVER_1793507871367": {
+      "matchId": "match_TEST_ROOM_WALKOVER_1793507871367",
+      "roomId": "TEST_ROOM_WALKOVER",
+      "whitePlayer": {
+        "id": "p_1793507872219_sbpx",
+        "name": "Patient Player",
+        "rating": 1600
+      },
+      "blackPlayer": null,
+      "status": "WALKOVER",
+      "winner": "white",
+      "reason": "walkover",
+      "startTime": null,
+      "endTime": 1793507872221,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    },
+    "match_TEST_ROOM_RESIGN_1793507871367": {
+      "matchId": "match_TEST_ROOM_RESIGN_1793507871367",
+      "roomId": "TEST_ROOM_RESIGN",
+      "whitePlayer": {
+        "id": "p_1793507873121_ej9l",
+        "name": "Quitter",
+        "rating": 1600
+      },
+      "blackPlayer": {
+        "id": "p_1793507873233_vr6x",
+        "name": "Victor",
+        "rating": 1600
+      },
+      "status": "COMPLETED",
+      "winner": "black",
+      "reason": "resignation",
+      "startTime": 1793507873234,
+      "endTime": 1793507873309,
+      "moves": [],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     }
   }
 }

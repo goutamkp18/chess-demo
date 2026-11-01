@@ -113,7 +113,7 @@ export class ChessRoom {
       if (this.whitePlayer && this.whitePlayer.reconnectToken === reconnectToken) {
         this.whitePlayer.socketId = socket.id;
         this.whitePlayer.connected = true;
-        socket.join(this.roomId);
+        await socket.join(this.roomId);
         this.broadcastRoomState();
         this.io.to(this.roomId).emit(SOCKET_EVENTS.OPPONENT_RECONNECTED, {
           color: 'w',
@@ -124,7 +124,7 @@ export class ChessRoom {
       if (this.blackPlayer && this.blackPlayer.reconnectToken === reconnectToken) {
         this.blackPlayer.socketId = socket.id;
         this.blackPlayer.connected = true;
-        socket.join(this.roomId);
+        await socket.join(this.roomId);
         this.broadcastRoomState();
         this.io.to(this.roomId).emit(SOCKET_EVENTS.OPPONENT_RECONNECTED, {
           color: 'b',
@@ -138,14 +138,14 @@ export class ChessRoom {
     if (this.whitePlayer && this.whitePlayer.id === playerId) {
       this.whitePlayer.socketId = socket.id;
       this.whitePlayer.connected = true;
-      socket.join(this.roomId);
+      await socket.join(this.roomId);
       this.broadcastRoomState();
       return { success: true, token: this.whitePlayer.reconnectToken, color: 'w' };
     }
     if (this.blackPlayer && this.blackPlayer.id === playerId) {
       this.blackPlayer.socketId = socket.id;
       this.blackPlayer.connected = true;
-      socket.join(this.roomId);
+      await socket.join(this.roomId);
       this.broadcastRoomState();
       return { success: true, token: this.blackPlayer.reconnectToken, color: 'b' };
     }
@@ -182,7 +182,7 @@ export class ChessRoom {
         this.handleWalkoverTimeout();
       }, 60_000);
 
-      socket.join(this.roomId);
+      await socket.join(this.roomId);
       this.broadcastRoomState();
       return { success: true, token, color: 'w' };
     }
@@ -211,7 +211,7 @@ export class ChessRoom {
       // Both players connected -> Move to READY confirmation
       this.status = 'READY_CONFIRMATION';
 
-      socket.join(this.roomId);
+      await socket.join(this.roomId);
       this.broadcastRoomState();
 
       this.io.to(this.roomId).emit(SOCKET_EVENTS.OPPONENT_JOINED, {
@@ -632,9 +632,22 @@ export class ChessRoom {
 
   // Broadcast Authoritative Room State
   public broadcastRoomState() {
+    const state = this.getRoomState();
     this.io.to(this.roomId).emit(SOCKET_EVENTS.ROOM_UPDATED, {
-      roomState: this.getRoomState(),
+      roomState: state,
     });
+
+    // Also send directly to each player socket to guarantee delivery
+    if (this.whitePlayer?.socketId) {
+      this.io.to(this.whitePlayer.socketId).emit(SOCKET_EVENTS.ROOM_UPDATED, {
+        roomState: state,
+      });
+    }
+    if (this.blackPlayer?.socketId) {
+      this.io.to(this.blackPlayer.socketId).emit(SOCKET_EVENTS.ROOM_UPDATED, {
+        roomState: state,
+      });
+    }
   }
 
   // Persist Match to Database

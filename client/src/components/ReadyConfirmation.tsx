@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CheckCircle2, Loader2, Play, WifiOff } from 'lucide-react';
 import type { PlayerProfile, TimeControl, PlayerColor } from '../types/index';
 import { ChessPiece } from '../chess/ChessPiece';
 import { soundManager } from '../utils/sound';
+import { socketService } from '../services/socket';
 
 interface ReadyConfirmationProps {
   roomId: string;
@@ -25,6 +26,15 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
 }) => {
   const isMeReady =
     myColor === 'w' ? !!whitePlayer?.isReady : !!blackPlayer?.isReady;
+
+  // Sync pulse while waiting for readiness
+  useEffect(() => {
+    const pulse = setInterval(() => {
+      socketService.requestSync(roomId);
+    }, 1500);
+
+    return () => clearInterval(pulse);
+  }, [roomId]);
 
   const handleReadyClick = () => {
     if (!isMeReady) {

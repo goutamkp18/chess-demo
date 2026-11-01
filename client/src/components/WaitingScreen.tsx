@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShieldAlert, LogOut, Copy, Check, Users } from 'lucide-react';
 import type { PlayerProfile, TimeControl } from '../types/index';
 import { ChessPiece } from '../chess/ChessPiece';
+import { socketService } from '../services/socket';
 
 interface WaitingScreenProps {
   roomId: string;
@@ -36,6 +37,15 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
 
     return () => clearInterval(interval);
   }, [waitingDeadline]);
+
+  // Periodic sync pulse to guarantee immediate transition when opponent enters
+  useEffect(() => {
+    const pulse = setInterval(() => {
+      socketService.requestSync(roomId);
+    }, 1500);
+
+    return () => clearInterval(pulse);
+  }, [roomId]);
 
   const copyRoomInvite = () => {
     const inviteUrl = `${window.location.origin}?roomId=${encodeURIComponent(roomId)}`;
