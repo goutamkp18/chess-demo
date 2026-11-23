@@ -47,23 +47,27 @@ ALTER TABLE public.arena_rooms ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.arena_matches ENABLE ROW LEVEL SECURITY;
 
 -- 5. Policies: Allow read access to all clients; allow insert/update from service role or authenticated backend
+DROP POLICY IF EXISTS "Public Read Arena Rooms" ON public.arena_rooms;
 CREATE POLICY "Public Read Arena Rooms"
   ON public.arena_rooms
   FOR SELECT
   USING (true);
 
-CREATE POLICY "Backend Modify Arena Rooms"
+DROP POLICY IF EXISTS "Public Modify Arena Rooms" ON public.arena_rooms;
+CREATE POLICY "Public Modify Arena Rooms"
   ON public.arena_rooms
   FOR ALL
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Public Read Arena Matches" ON public.arena_matches;
 CREATE POLICY "Public Read Arena Matches"
   ON public.arena_matches
   FOR SELECT
   USING (true);
 
-CREATE POLICY "Backend Modify Arena Matches"
+DROP POLICY IF EXISTS "Public Modify Arena Matches" ON public.arena_matches;
+CREATE POLICY "Public Modify Arena Matches"
   ON public.arena_matches
   FOR ALL
   USING (true)
