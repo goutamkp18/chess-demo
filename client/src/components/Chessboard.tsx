@@ -206,13 +206,13 @@ export const Chessboard: React.FC<ChessboardProps> = ({
       {/* Outer Luxury Wooden Frame with Inlay and Corner Brackets */}
       <div className="wood-board-bevel rounded-xl p-3 md:p-4 shadow-2xl relative">
         {/* Corner Metallic Gold Screws/Accents */}
-        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#D9A441] border border-[#F5C66A]/80 shadow-xs pointer-events-none" />
-        <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D9A441] border border-[#F5C66A]/80 shadow-xs pointer-events-none" />
-        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 rounded-full bg-[#D9A441] border border-[#F5C66A]/80 shadow-xs pointer-events-none" />
-        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D9A441] border border-[#F5C66A]/80 shadow-xs pointer-events-none" />
+        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#E8C27A] border border-[#F5D898]/80 shadow-xs pointer-events-none" />
+        <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#E8C27A] border border-[#F5D898]/80 shadow-xs pointer-events-none" />
+        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 rounded-full bg-[#E8C27A] border border-[#F5D898]/80 shadow-xs pointer-events-none" />
+        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 rounded-full bg-[#E8C27A] border border-[#F5D898]/80 shadow-xs pointer-events-none" />
 
         {/* Top File Coordinates */}
-        <div className="grid grid-cols-8 h-4 mb-1 text-center font-['Cinzel'] text-[10px] sm:text-xs font-semibold text-[#D9A441]/85">
+        <div className="grid grid-cols-8 h-4 mb-1 text-center font-mono text-[10px] sm:text-xs font-bold text-[#E8C27A]/90">
           {displayFiles.map((file) => (
             <div key={`top-${file}`} className="flex items-center justify-center">
               {file}
@@ -223,7 +223,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({
         {/* Board Center with Left/Right Rank Coordinates */}
         <div className="flex items-center">
           {/* Left Rank Coordinates */}
-          <div className="flex flex-col justify-between w-4 mr-1 text-center font-['Cinzel'] text-[10px] sm:text-xs font-semibold text-[#D9A441]/85 h-[min(80vw,500px)]">
+          <div className="flex flex-col justify-between w-4 mr-1 text-center font-mono text-[10px] sm:text-xs font-bold text-[#E8C27A]/90 h-[min(80vw,500px)]">
             {displayRanks.map((rank) => (
               <div key={`left-${rank}`} className="flex-1 flex items-center justify-center">
                 {rank}
@@ -232,7 +232,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({
           </div>
 
           {/* 8x8 Playable Chessboard Grid */}
-          <div className="grid grid-cols-8 grid-rows-8 w-[min(80vw,500px)] h-[min(80vw,500px)] border border-[#1A0E08] rounded shadow-inner overflow-hidden">
+          <div className="grid grid-cols-8 grid-rows-8 w-[min(80vw,500px)] h-[min(80vw,500px)] border border-[#161413] rounded shadow-inner overflow-hidden">
             {displayRanks.map((rank, rankIdx) =>
               displayFiles.map((file, fileIdx) => {
                 const square = `${file}${rank}` as Square;
@@ -260,10 +260,10 @@ export const Chessboard: React.FC<ChessboardProps> = ({
                       <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
                         {legalMove.captured ? (
                           // Circular ring for capture
-                          <div className="w-[85%] h-[85%] rounded-full border-4 border-[#F5C66A]/80 animate-pulse" />
+                          <div className="w-[85%] h-[85%] rounded-full border-4 border-[#E8C27A]/80 animate-pulse" />
                         ) : (
                           // Solid dot for empty square
-                          <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#D9A441]/90 shadow-sm shadow-black" />
+                          <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#E8C27A]/90 shadow-sm shadow-black" />
                         )}
                       </div>
                     )}
@@ -289,7 +289,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({
           </div>
 
           {/* Right Rank Coordinates */}
-          <div className="flex flex-col justify-between w-4 ml-1 text-center font-['Cinzel'] text-[10px] sm:text-xs font-semibold text-[#D9A441]/85 h-[min(80vw,500px)]">
+          <div className="flex flex-col justify-between w-4 ml-1 text-center font-mono text-[10px] sm:text-xs font-bold text-[#E8C27A]/90 h-[min(80vw,500px)]">
             {displayRanks.map((rank) => (
               <div key={`right-${rank}`} className="flex-1 flex items-center justify-center">
                 {rank}
@@ -299,7 +299,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({
         </div>
 
         {/* Bottom File Coordinates */}
-        <div className="grid grid-cols-8 h-4 mt-1 text-center font-['Cinzel'] text-[10px] sm:text-xs font-semibold text-[#D9A441]/85">
+        <div className="grid grid-cols-8 h-4 mt-1 text-center font-mono text-[10px] sm:text-xs font-bold text-[#E8C27A]/90">
           {displayFiles.map((file) => (
             <div key={`bot-${file}`} className="flex items-center justify-center">
               {file}

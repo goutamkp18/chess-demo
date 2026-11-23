@@ -106,38 +106,38 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] flex items-center justify-center p-4 relative overflow-hidden select-none">
+    <div className="min-h-screen bg-[#0B0B0C] flex items-center justify-center p-4 relative overflow-hidden select-none">
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#D9A441]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#7A4725]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#E8C27A]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-[#C9993F]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Entry Card */}
-      <div className="luxury-card-gold p-6 sm:p-10 rounded-3xl max-w-md w-full border border-[#D9A441]/35 bg-[#1D1915]/95 backdrop-blur-xl shadow-2xl relative z-10">
+      <div className="luxury-card-gold p-6 sm:p-10 rounded-3xl max-w-md w-full border border-[#E8C27A]/25 bg-[#161617]/95 backdrop-blur-xl shadow-2xl relative z-10">
         {/* Top Regal Branding Header */}
-        <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D9A441] to-[#996B1E] flex items-center justify-center shadow-xl shadow-[#D9A441]/20 mb-4 border border-[#F5C66A]/40 transform -rotate-3 hover:rotate-0 transition-transform">
-            <Crown className="w-9 h-9 text-[#0B0B0D] fill-current" />
+        <div className="text-center mb-7">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-[#E8C27A] via-[#D8AD56] to-[#C9993F] flex items-center justify-center shadow-lg shadow-[#C9993F]/20 mb-3 border border-[#F5D898]/40 transform -rotate-2 hover:rotate-0 transition-transform">
+            <Crown className="w-8 h-8 text-[#111111] fill-current" />
           </div>
 
-          <h1 className="font-['Cinzel'] text-3xl sm:text-4xl font-extrabold tracking-wider text-[#FAF7F2] mb-1">
+          <h1 className="font-condensed text-3xl sm:text-4xl font-extrabold tracking-wider text-gold-gradient uppercase mb-1">
             CHESS ARENA
           </h1>
 
-          <div className="flex items-center justify-center gap-1.5 text-xs text-[#D9A441] tracking-widest uppercase font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="flex items-center justify-center gap-1.5 text-xs text-[#E8C27A] tracking-widest uppercase font-semibold">
+            <Sparkles className="w-3.5 h-3.5 text-[#E8C27A]" />
             <span>Championship Multiplayer</span>
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E8C27A]" />
           </div>
 
-          <p className="text-xs text-[#9E9689] mt-3 font-['Outfit']">
+          <p className="text-xs text-[#A1A1AA] mt-2.5">
             Enter your tournament match credentials below to join your assigned board.
           </p>
         </div>
 
         {/* Error Alert Box */}
         {errorMessage && (
-          <div className="mb-6 p-3.5 rounded-xl bg-red-950/40 border border-red-500/50 flex items-start gap-2.5 text-xs text-red-200">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mb-5 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/40 flex items-start gap-2.5 text-xs text-rose-200">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{errorMessage}</span>
           </div>
         )}
@@ -146,7 +146,7 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Room ID Input */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#D9A441] mb-1.5 font-['Cinzel']">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#E8C27A] mb-1.5 font-condensed">
               Room ID
             </label>
             <div className="relative">
@@ -156,14 +156,14 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
                 onChange={(e) => setRoomId(e.target.value.toUpperCase())}
                 placeholder="e.g. ROOM-101"
                 required
-                className="w-full py-3 px-4 rounded-xl bg-[#161311] border border-[#2A241F] focus:border-[#D9A441] focus:ring-1 focus:ring-[#D9A441] text-[#FAF7F2] font-mono text-sm placeholder:text-[#9E9689]/40 outline-none transition-all uppercase"
+                className="w-full py-2.5 px-3.5 rounded-xl bg-[#131314] border border-[#262628] focus:border-[#E8C27A] focus:ring-1 focus:ring-[#E8C27A] text-[#FAF7F2] font-mono text-sm placeholder:text-[#71717A] outline-none transition-all uppercase"
               />
             </div>
           </div>
 
           {/* Room Password Input */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#D9A441] mb-1.5 font-['Cinzel']">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#E8C27A] mb-1.5 font-condensed">
               Room Password
             </label>
             <div className="relative">
@@ -173,14 +173,14 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
                 required
-                className="w-full py-3 px-4 rounded-xl bg-[#161311] border border-[#2A241F] focus:border-[#D9A441] focus:ring-1 focus:ring-[#D9A441] text-[#FAF7F2] text-sm placeholder:text-[#9E9689]/40 outline-none transition-all"
+                className="w-full py-2.5 px-3.5 rounded-xl bg-[#131314] border border-[#262628] focus:border-[#E8C27A] focus:ring-1 focus:ring-[#E8C27A] text-[#FAF7F2] text-sm placeholder:text-[#71717A] outline-none transition-all"
               />
             </div>
           </div>
 
           {/* Player Name / Handle */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#D9A441] mb-1.5 font-['Cinzel']">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#E8C27A] mb-1.5 font-condensed">
               Player Name
             </label>
             <div className="relative">
@@ -190,16 +190,16 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
                 onChange={(e) => setPlayerName(e.target.value)}
                 placeholder="e.g. Grandmaster Aarav"
                 required
-                className="w-full py-3 px-4 rounded-xl bg-[#161311] border border-[#2A241F] focus:border-[#D9A441] focus:ring-1 focus:ring-[#D9A441] text-[#FAF7F2] text-sm placeholder:text-[#9E9689]/40 outline-none transition-all"
+                className="w-full py-2.5 px-3.5 rounded-xl bg-[#131314] border border-[#262628] focus:border-[#E8C27A] focus:ring-1 focus:ring-[#E8C27A] text-[#FAF7F2] text-sm placeholder:text-[#71717A] outline-none transition-all"
               />
             </div>
           </div>
 
           {/* Time Control Selection */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#D9A441] mb-1.5 font-['Cinzel'] flex items-center justify-between">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#E8C27A] mb-1.5 font-condensed flex items-center justify-between">
               <span>Time Control</span>
-              <span className="text-[10px] text-[#9E9689] lowercase font-normal">(if creating room)</span>
+              <span className="text-[10px] text-[#A1A1AA] lowercase font-normal">(if creating room)</span>
             </label>
             <div className="grid grid-cols-2 gap-2">
               {TIME_CONTROLS.map((tc) => {
@@ -211,11 +211,11 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
                     onClick={() => setSelectedTimeControl(tc)}
                     className={`py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#2A231C] border-[#D9A441] text-[#F5C66A] shadow-sm'
-                        : 'bg-[#161311] border-[#2A241F] text-[#9E9689] hover:border-[#3D342B]'
+                        ? 'bg-[#1C1C1E] border-[#E8C27A] text-[#E8C27A] shadow-sm'
+                        : 'bg-[#131314] border-[#262628] text-[#A1A1AA] hover:border-[#38383A] hover:text-[#FAF7F2]'
                     }`}
                   >
-                    <Clock className="w-3.5 h-3.5 text-[#D9A441]" />
+                    <Clock className="w-3.5 h-3.5 text-[#E8C27A]" />
                     <span>{tc.name}</span>
                   </button>
                 );
@@ -228,11 +228,11 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B37D22] text-[#0B0B0D] font-bold text-sm tracking-widest shadow-xl shadow-[#D9A441]/20 hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-50 cursor-pointer font-['Cinzel']"
+              className="btn-gold w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-condensed tracking-wider uppercase text-base shadow-xl disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
-                  <span className="w-4 h-4 border-2 border-[#0B0B0D] border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
                   <span>AUTHENTICATING...</span>
                 </>
               ) : (
@@ -246,8 +246,8 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
         </form>
 
         {/* Security & System Status */}
-        <div className="mt-8 pt-4 border-t border-[#2A241F] flex items-center justify-between text-[11px] text-[#9E9689]">
-          <div className="flex items-center gap-1.5 text-emerald-400">
+        <div className="mt-7 pt-4 border-t border-[#262628] flex items-center justify-between text-[11px] text-[#A1A1AA]">
+          <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
             <span>Authoritative Engine</span>
           </div>

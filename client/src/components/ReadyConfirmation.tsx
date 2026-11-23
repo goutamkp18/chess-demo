@@ -45,21 +45,21 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
 
   return (
     <div className="flex-1 flex items-center justify-center p-4">
-      <div className="luxury-card-gold p-6 sm:p-10 rounded-2xl max-w-2xl w-full border border-[#D9A441]/40 bg-[#1D1915] text-center shadow-2xl relative">
+      <div className="luxury-card-gold p-6 sm:p-10 rounded-2xl max-w-2xl w-full border border-[#E8C27A]/25 bg-[#161617] text-center shadow-2xl relative">
         {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-36 bg-[#D9A441]/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-36 bg-[#E8C27A]/10 blur-3xl pointer-events-none" />
 
         {/* Room Header */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2A231C] border border-[#D9A441]/30 text-xs font-semibold text-[#D9A441] mb-2">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/30 text-xs font-semibold text-[#E8C27A] mb-3">
           <span>ROOM #{roomId}</span>
           <span>•</span>
           <span>{timeControl.name}</span>
         </div>
 
-        <h2 className="font-['Cinzel'] text-2xl font-bold tracking-wider text-[#FAF7F2] mb-1">
+        <h2 className="font-condensed text-2xl sm:text-3xl font-extrabold tracking-wider text-[#FAF7F2] mb-1 uppercase">
           MATCH ASSEMBLED
         </h2>
-        <p className="text-xs text-[#9E9689] mb-8 font-['Outfit']">
+        <p className="text-xs text-[#A1A1AA] mb-7">
           Both Grandmasters have arrived. Confirm your readiness to initiate the tournament clocks.
         </p>
 
@@ -69,13 +69,13 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
           <div
             className={`p-5 rounded-2xl border transition-all duration-300 text-left relative overflow-hidden ${
               whitePlayer?.isReady
-                ? 'bg-[#18241B] border-emerald-500/50 shadow-lg shadow-emerald-950/40'
-                : 'bg-[#161311] border-[#2A241F]'
+                ? 'bg-emerald-500/10 border-emerald-500/50 shadow-lg shadow-emerald-950/40'
+                : 'bg-[#131314] border-[#262628]'
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#D9A441] flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FAF7F2] border border-[#2A241F]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[#E8C27A] flex items-center gap-1.5 font-condensed">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FAF7F2] border border-[#262628]" />
                 White Player
               </span>
               <div className="w-8 h-8">
@@ -89,24 +89,24 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
                   <img
                     src={whitePlayer.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(whitePlayer.name)}`}
                     alt={whitePlayer.name}
-                    className="w-12 h-12 rounded-full border-2 border-[#D9A441]/40 bg-[#2A231C]"
+                    className="w-12 h-12 rounded-full border-2 border-[#E8C27A]/40 bg-[#1C1C1E]"
                   />
                   <div>
                     <div className="font-semibold text-sm text-[#FAF7F2] flex items-center gap-1.5">
                       {whitePlayer.name}
                       {myId === whitePlayer.id && (
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#D9A441]/30 text-[#F5C66A]">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#E8C27A]/20 text-[#E8C27A] font-bold">
                           (You)
                         </span>
                       )}
                     </div>
-                    <div className="text-xs text-[#9E9689]">
+                    <div className="text-xs text-[#A1A1AA]">
                       Rating: {whitePlayer.rating || 1600}
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#2A241F] flex items-center justify-between">
+                <div className="pt-3 border-t border-[#262628] flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs text-emerald-400">
                     {whitePlayer.connected ? (
                       <>
@@ -115,25 +115,25 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
                       </>
                     ) : (
                       <>
-                        <WifiOff className="w-3.5 h-3.5 text-red-400" />
-                        <span className="text-red-400">Reconnecting...</span>
+                        <WifiOff className="w-3.5 h-3.5 text-rose-400" />
+                        <span className="text-rose-400">Reconnecting...</span>
                       </>
                     )}
                   </div>
 
                   {whitePlayer.isReady ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/40 animate-pulse">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/40 animate-pulse font-condensed uppercase tracking-wider">
                       <CheckCircle2 className="w-3.5 h-3.5" /> READY
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#2A231C] text-[#9E9689] text-xs font-medium border border-[#3A332B]">
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#D9A441]" /> NOT READY
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C1C1E] text-[#A1A1AA] text-xs font-medium border border-[#2E2E30] font-condensed uppercase tracking-wider">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E8C27A]" /> NOT READY
                     </span>
                   )}
                 </div>
               </div>
             ) : (
-              <div className="text-center py-6 text-xs text-[#9E9689]">Waiting for player...</div>
+              <div className="text-center py-6 text-xs text-[#A1A1AA]">Waiting for player...</div>
             )}
           </div>
 
@@ -141,13 +141,13 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
           <div
             className={`p-5 rounded-2xl border transition-all duration-300 text-left relative overflow-hidden ${
               blackPlayer?.isReady
-                ? 'bg-[#18241B] border-emerald-500/50 shadow-lg shadow-emerald-950/40'
-                : 'bg-[#161311] border-[#2A241F]'
+                ? 'bg-emerald-500/10 border-emerald-500/50 shadow-lg shadow-emerald-950/40'
+                : 'bg-[#131314] border-[#262628]'
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#D9A441] flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#181513] border border-[#D9A441]/40" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[#E8C27A] flex items-center gap-1.5 font-condensed">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#161617] border border-[#E8C27A]/40" />
                 Black Player
               </span>
               <div className="w-8 h-8">
@@ -161,24 +161,24 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
                   <img
                     src={blackPlayer.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(blackPlayer.name)}`}
                     alt={blackPlayer.name}
-                    className="w-12 h-12 rounded-full border-2 border-[#D9A441]/40 bg-[#2A231C]"
+                    className="w-12 h-12 rounded-full border-2 border-[#E8C27A]/40 bg-[#1C1C1E]"
                   />
                   <div>
                     <div className="font-semibold text-sm text-[#FAF7F2] flex items-center gap-1.5">
                       {blackPlayer.name}
                       {myId === blackPlayer.id && (
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#D9A441]/30 text-[#F5C66A]">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#E8C27A]/20 text-[#E8C27A] font-bold">
                           (You)
                         </span>
                       )}
                     </div>
-                    <div className="text-xs text-[#9E9689]">
+                    <div className="text-xs text-[#A1A1AA]">
                       Rating: {blackPlayer.rating || 1600}
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#2A241F] flex items-center justify-between">
+                <div className="pt-3 border-t border-[#262628] flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs text-emerald-400">
                     {blackPlayer.connected ? (
                       <>
@@ -187,25 +187,25 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
                       </>
                     ) : (
                       <>
-                        <WifiOff className="w-3.5 h-3.5 text-red-400" />
-                        <span className="text-red-400">Reconnecting...</span>
+                        <WifiOff className="w-3.5 h-3.5 text-rose-400" />
+                        <span className="text-rose-400">Reconnecting...</span>
                       </>
                     )}
                   </div>
 
                   {blackPlayer.isReady ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/40 animate-pulse">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/40 animate-pulse font-condensed uppercase tracking-wider">
                       <CheckCircle2 className="w-3.5 h-3.5" /> READY
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#2A231C] text-[#9E9689] text-xs font-medium border border-[#3A332B]">
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#D9A441]" /> NOT READY
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1C1C1E] text-[#A1A1AA] text-xs font-medium border border-[#2E2E30] font-condensed uppercase tracking-wider">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E8C27A]" /> NOT READY
                     </span>
                   )}
                 </div>
               </div>
             ) : (
-              <div className="text-center py-6 text-xs text-[#9E9689]">Waiting for player...</div>
+              <div className="text-center py-6 text-xs text-[#A1A1AA]">Waiting for player...</div>
             )}
           </div>
         </div>
@@ -213,14 +213,14 @@ export const ReadyConfirmation: React.FC<ReadyConfirmationProps> = ({
         {/* Action Button: CONFIRM READY */}
         <div className="max-w-xs mx-auto">
           {isMeReady ? (
-            <div className="py-3 px-4 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 font-bold text-sm tracking-wide flex items-center justify-center gap-2 font-['Cinzel'] animate-pulse">
-              <CheckCircle2 className="w-5 h-5" />
+            <div className="py-3 px-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 font-bold text-xs tracking-wider flex items-center justify-center gap-2 font-condensed uppercase animate-pulse">
+              <CheckCircle2 className="w-4 h-4" />
               <span>YOU ARE READY. WAITING FOR OPPONENT...</span>
             </div>
           ) : (
             <button
               onClick={handleReadyClick}
-              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B37D22] text-[#0B0B0D] font-bold text-sm tracking-wider shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer font-['Cinzel']"
+              className="btn-gold w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-condensed tracking-wider uppercase text-base shadow-xl active:scale-[0.99] transition-all cursor-pointer"
             >
               <Play className="w-4 h-4 fill-current" />
               CONFIRM READY

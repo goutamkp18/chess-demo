@@ -30,7 +30,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
         particleCount: 120,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#D9A441', '#F5C66A', '#FAF7F2', '#E8D9C0'],
+        colors: ['#E8C27A', '#C6A15B', '#FAF7F2', '#F5D898'],
       });
     }
   }, [isWinner]);
@@ -61,51 +61,51 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
-      <div className="luxury-card-gold p-6 sm:p-8 rounded-2xl max-w-md w-full border border-[#D9A441]/50 bg-[#1D1915] text-center shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-fade-in">
+      <div className="luxury-card-gold p-6 sm:p-8 rounded-2xl max-w-md w-full border border-[#E8C27A]/30 bg-[#161617] text-center shadow-2xl relative overflow-hidden">
         {/* Glow accent */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-[#D9A441]/10 blur-2xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-[#E8C27A]/10 blur-2xl pointer-events-none" />
 
         {/* Header Icon */}
-        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-radial from-[#D9A441]/20 to-transparent border border-[#D9A441]/40 mb-4 shadow-lg">
+        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-[#1C1C1E] border border-[#E8C27A]/40 mb-4 shadow-lg text-[#E8C27A]">
           {isWinner ? (
-            <Trophy className="w-8 h-8 text-[#F5C66A] animate-bounce" />
+            <Trophy className="w-8 h-8 text-[#E8C27A] animate-bounce" />
           ) : isDraw ? (
-            <Award className="w-8 h-8 text-[#9E9689]" />
+            <Award className="w-8 h-8 text-[#E8C27A]" />
           ) : (
-            <Flag className="w-8 h-8 text-red-400" />
+            <Flag className="w-8 h-8 text-rose-400" />
           )}
         </div>
 
         {/* Title */}
-        <h2 className="font-['Cinzel'] text-2xl sm:text-3xl font-bold tracking-wider mb-1 text-[#FAF7F2]">
+        <h2 className="font-condensed text-3xl sm:text-4xl font-extrabold tracking-wider mb-1 text-[#FAF7F2] uppercase">
           {isWinner ? (
-            <span className="text-[#F5C66A]">VICTORY</span>
+            <span className="text-gold-gradient">VICTORY</span>
           ) : isDraw ? (
             <span className="text-[#FAF7F2]">DRAW</span>
           ) : (
-            <span className="text-[#9E9689]">DEFEAT</span>
+            <span className="text-[#A1A1AA]">DEFEAT</span>
           )}
         </h2>
 
         {/* Reason pill */}
-        <div className="inline-block px-3 py-1 rounded-full bg-[#2A231C] border border-[#D9A441]/30 text-xs font-medium text-[#D9A441] mb-4">
+        <div className="inline-block px-3.5 py-1 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/30 text-xs font-semibold text-[#E8C27A] mb-4 font-condensed tracking-wider uppercase">
           {getReasonLabel(result.reason)}
         </div>
 
-        <p className="text-sm text-[#FAF7F2]/90 mb-6 font-['Outfit']">
+        <p className="text-xs sm:text-sm text-[#A1A1AA] mb-6">
           {result.message}
         </p>
 
         {/* Match Statistics */}
         <div className="grid grid-cols-2 gap-3 mb-6 text-left">
-          <div className="p-3 rounded-xl bg-[#161311] border border-[#2A241F]">
-            <div className="text-[11px] text-[#9E9689]">Total Moves</div>
+          <div className="p-3.5 rounded-xl bg-[#131314] border border-[#262628]">
+            <div className="text-[11px] text-[#A1A1AA] font-condensed uppercase tracking-wider">Total Moves</div>
             <div className="text-lg font-semibold text-[#FAF7F2] font-mono">{totalMoves}</div>
           </div>
-          <div className="p-3 rounded-xl bg-[#161311] border border-[#2A241F]">
-            <div className="text-[11px] text-[#9E9689]">Winner</div>
-            <div className="text-lg font-semibold text-[#F5C66A] capitalize">
+          <div className="p-3.5 rounded-xl bg-[#131314] border border-[#262628]">
+            <div className="text-[11px] text-[#A1A1AA] font-condensed uppercase tracking-wider">Winner</div>
+            <div className="text-lg font-semibold text-[#E8C27A] capitalize font-condensed tracking-wide">
               {result.winner}
             </div>
           </div>
@@ -114,7 +114,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
         {/* Actions */}
         <button
           onClick={onReturnToEntry}
-          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B37D22] text-[#0B0B0D] font-bold text-sm tracking-wide shadow-lg hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer font-['Cinzel']"
+          className="btn-gold w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-condensed tracking-wider uppercase text-sm shadow-xl active:scale-[0.99] transition-all cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
           RETURN TO MATCH ENTRY

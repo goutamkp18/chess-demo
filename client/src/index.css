@@ -2,21 +2,27 @@
 
 @layer base {
   :root {
-    --bg-primary: #0B0B0D;
-    --bg-secondary: #151311;
-    --card-bg: #1D1915;
-    --card-border: #2A241F;
-    --card-border-gold: rgba(217, 164, 65, 0.35);
-    --gold: #D9A441;
-    --gold-bright: #F5C66A;
-    --gold-glow: rgba(245, 198, 106, 0.45);
+    --bg-primary: #0B0B0C;
+    --bg-surface: #161617;
+    --bg-subsurface: #131314;
+    --bg-elevated: #1C1C1E;
+    --card-bg: #161617;
+    --card-border: #262628;
+    --card-border-light: #2E2E30;
+    --card-border-gold: rgba(232, 194, 122, 0.22);
+    --gold: #C6A15B;
+    --gold-bright: #E8C27A;
+    --gold-light: #F5D898;
+    --gold-dark: #C9993F;
+    --gold-glow: rgba(232, 194, 122, 0.25);
     --text-primary: #FAF7F2;
-    --text-secondary: #9E9689;
-    --board-frame: #2C1A11;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
+    --board-frame: #18181A;
     --board-light: #DFC8A5;
     --board-dark: #7A4725;
-    --board-highlight: rgba(245, 198, 106, 0.55);
-    --board-select: rgba(217, 164, 65, 0.7);
+    --board-highlight: rgba(232, 194, 122, 0.55);
+    --board-select: rgba(198, 161, 91, 0.7);
   }
 
   body {
@@ -24,7 +30,7 @@
     padding: 0;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Cinzel', 'Playfair Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     user-select: none;
@@ -38,15 +44,84 @@
   }
 }
 
-/* Luxury Wood Texture & Board Styling */
-.wood-board-bevel {
-  background: linear-gradient(145deg, #3D2214 0%, #1F100A 50%, #2A170D 100%);
+.font-condensed {
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Gold Gradient Text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F5D898 0%, #E8C27A 45%, #C9993F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gold Gradient Button */
+.btn-gold {
+  background: linear-gradient(135deg, #E8C27A 0%, #D8AD56 50%, #C9993F 100%);
+  color: #111111;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(201, 153, 63, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-gold:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 24px rgba(201, 153, 63, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* Tournament Dashboard Card & Border Styles */
+.luxury-card {
+  background: #161617;
+  border: 1px solid #262628;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.luxury-card:hover {
+  border-color: #2E2E30;
+}
+
+.luxury-card-gold {
+  background: #161617;
+  border: 1px solid rgba(232, 194, 122, 0.25);
   box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(217, 164, 65, 0.25),
-    inset 0 2px 4px rgba(255, 255, 255, 0.12),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(217, 164, 65, 0.28);
+    0 10px 30px -10px rgba(0, 0, 0, 0.7),
+    0 0 25px -5px rgba(232, 194, 122, 0.1);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-gold:hover {
+  border-color: rgba(232, 194, 122, 0.4);
+  box-shadow: 
+    0 12px 35px -10px rgba(0, 0, 0, 0.8),
+    0 0 30px -5px rgba(232, 194, 122, 0.16);
+}
+
+/* Beveled Chessboard Frame matching Dashboard Elegance */
+.wood-board-bevel {
+  background: linear-gradient(145deg, #242220 0%, #161413 50%, #1E1C1A 100%);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(232, 194, 122, 0.22),
+    inset 0 2px 4px rgba(255, 255, 255, 0.08),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(232, 194, 122, 0.3);
 }
 
 .wood-square-light {
@@ -72,8 +147,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(245, 198, 106, 0.5) 0%, rgba(217, 164, 65, 0.35) 100%);
-  border: 2px solid #F5C66A;
+  background: radial-gradient(circle, rgba(232, 194, 122, 0.5) 0%, rgba(198, 161, 91, 0.35) 100%);
+  border: 2px solid #E8C27A;
   pointer-events: none;
   z-index: 5;
 }
@@ -85,8 +160,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(245, 198, 106, 0.38);
-  box-shadow: inset 0 0 10px rgba(245, 198, 106, 0.45);
+  background: rgba(232, 194, 122, 0.35);
+  box-shadow: inset 0 0 10px rgba(232, 194, 122, 0.45);
   pointer-events: none;
   z-index: 4;
 }
@@ -118,43 +193,27 @@
   z-index: 50;
 }
 
-/* Luxury Gold & Glass Cards */
-.luxury-card {
-  background: #1D1915;
-  border: 1px solid rgba(217, 164, 65, 0.22);
-  box-shadow: 
-    0 10px 30px -5px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-radius: 14px;
-}
-
-.luxury-card-gold {
-  border-color: rgba(217, 164, 65, 0.45);
-  box-shadow: 
-    0 10px 30px -5px rgba(0, 0, 0, 0.7),
-    0 0 15px -3px rgba(217, 164, 65, 0.15);
-}
-
+/* Digital Clock Display */
 .digital-clock-display {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
-  text-shadow: 0 0 12px rgba(245, 198, 106, 0.25);
+  text-shadow: 0 0 12px rgba(232, 194, 122, 0.25);
 }
 
-/* Custom Luxury Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #151311;
+  background: #131314;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2D2721;
+  background: #262628;
   border-radius: 3px;
-  border: 1px solid rgba(217, 164, 65, 0.2);
+  border: 1px solid rgba(232, 194, 122, 0.15);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D9A441;
+  background: #C6A15B;
 }

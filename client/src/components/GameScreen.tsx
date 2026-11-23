@@ -128,22 +128,22 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   const materialDiff = whiteCapturedValue - blackCapturedValue;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0D] text-[#FAF7F2] flex flex-col font-['Outfit'] select-none">
+    <div className="min-h-screen bg-[#0B0B0C] text-[#FAF7F2] flex flex-col select-none">
       {/* Top Header Bar */}
-      <header className="px-4 py-3 border-b border-[#2A241F] bg-[#110F0D]/90 backdrop-blur-md flex items-center justify-between z-20">
+      <header className="px-4 py-3 border-b border-[#262628] bg-[#161617]/95 backdrop-blur-md flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#D9A441] to-[#996B1E] flex items-center justify-center shadow-md">
-              <Crown className="w-5 h-5 text-[#0B0B0D] fill-current" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#E8C27A] via-[#D8AD56] to-[#C9993F] flex items-center justify-center shadow-md border border-[#F5D898]/30">
+              <Crown className="w-5 h-5 text-[#111111] fill-current" />
             </div>
-            <span className="font-['Cinzel'] font-bold text-lg text-[#F5C66A] tracking-wider hidden sm:inline">
+            <span className="font-condensed font-extrabold text-xl text-gold-gradient tracking-wider hidden sm:inline uppercase">
               CHESS ARENA
             </span>
           </div>
 
           <button
             onClick={onExit}
-            className="flex items-center gap-1 text-xs text-[#9E9689] hover:text-[#FAF7F2] transition-colors py-1 px-2.5 rounded-lg bg-[#1D1915] border border-[#2A241F] cursor-pointer"
+            className="flex items-center gap-1 text-xs text-[#A1A1AA] hover:text-[#FAF7F2] transition-colors py-1 px-2.5 rounded-lg bg-[#1C1C1E] border border-[#2E2E30] hover:border-[#E8C27A]/40 cursor-pointer font-condensed tracking-wider uppercase"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
             <span>Lobby</span>
@@ -152,34 +152,34 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
         {/* Room & Status Info */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1D1915] border border-[#D9A441]/30 text-xs font-semibold text-[#D9A441]">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/30 text-xs font-semibold text-[#E8C27A]">
             <span>ROOM #{roomState.roomId}</span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-[#1D1915] border border-[#2A241F] px-2.5 py-1 rounded-full">
+          <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="hidden sm:inline">Live</span>
+            <span className="hidden sm:inline font-medium">Live Match</span>
           </div>
         </div>
       </header>
 
       {/* Draw Offer Notification Banner */}
       {roomState.drawOfferedBy && roomState.drawOfferedBy !== myId && (
-        <div className="bg-[#2A231C] border-b border-[#D9A441]/50 px-4 py-2.5 flex items-center justify-between text-xs animate-slide-down">
-          <div className="flex items-center gap-2 text-[#F5C66A]">
-            <Handshake className="w-4 h-4" />
+        <div className="bg-[#1C1C1E] border-b border-[#E8C27A]/40 px-4 py-2.5 flex items-center justify-between text-xs animate-slide-down">
+          <div className="flex items-center gap-2 text-[#E8C27A] font-medium">
+            <Handshake className="w-4 h-4 text-[#E8C27A]" />
             <span>Opponent has offered a draw. Accept?</span>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => onRespondDraw(true)}
-              className="flex items-center gap-1 px-3 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors cursor-pointer font-bold"
+              className="flex items-center gap-1 px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors cursor-pointer font-bold font-condensed uppercase tracking-wider"
             >
               <Check className="w-3.5 h-3.5" /> Accept
             </button>
             <button
               onClick={() => onRespondDraw(false)}
-              className="flex items-center gap-1 px-3 py-1 rounded-md bg-red-500/20 text-red-300 border border-red-500/40 hover:bg-red-500/30 transition-colors cursor-pointer"
+              className="flex items-center gap-1 px-3 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition-colors cursor-pointer font-condensed uppercase tracking-wider"
             >
               <X className="w-3.5 h-3.5" /> Decline
             </button>
@@ -187,34 +187,34 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         </div>
       )}
 
-      {/* Main 3-Column Arena Interface (Matching Reference Layout) */}
+      {/* Main 3-Column Arena Interface */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center">
         {/* LEFT COLUMN: Players & Clocks (Desktop: 3 cols) */}
         <div className="lg:col-span-3 flex lg:flex-col justify-between lg:justify-center gap-4 lg:gap-8 order-2 lg:order-1">
           {/* Top Player (Opponent) Card & Clock */}
           <div className="flex-1 lg:flex-initial space-y-2">
-            <div className="luxury-card p-3.5 rounded-xl border border-[#2A241F] flex items-center justify-between">
+            <div className="luxury-card p-3.5 rounded-xl border border-[#262628] bg-[#161617] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img
                     src={topPlayer?.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${topPlayer?.name || 'opponent'}`}
                     alt={topPlayer?.name || 'Opponent'}
-                    className="w-10 h-10 rounded-full bg-[#2A231C] border border-[#D9A441]/40"
+                    className="w-10 h-10 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/40"
                   />
                   <span
-                    className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#1D1915] ${
-                      topPlayer?.connected ? 'bg-emerald-400' : 'bg-red-400'
+                    className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#161617] ${
+                      topPlayer?.connected ? 'bg-emerald-400' : 'bg-rose-400'
                     }`}
                   />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 font-semibold text-sm text-[#FAF7F2]">
                     <span>{topPlayer?.name || 'Waiting...'}</span>
-                    <span className="text-[10px] text-[#D9A441] font-bold">
+                    <span className="text-xs text-[#E8C27A] font-bold">
                       {topColor === 'w' ? '♔' : '♚'}
                     </span>
                   </div>
-                  <div className="text-xs text-[#9E9689]">{topPlayer?.rating || 1600}</div>
+                  <div className="text-xs text-[#A1A1AA]">{topPlayer?.rating || 1600}</div>
                 </div>
               </div>
             </div>
@@ -223,13 +223,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             <div
               className={`p-3.5 sm:p-4 rounded-xl border text-center transition-all duration-200 ${
                 isTopActive
-                  ? 'bg-[#231E18] border-[#D9A441] shadow-lg shadow-[#D9A441]/10 ring-1 ring-[#D9A441]/50'
-                  : 'bg-[#151311] border-[#2A241F]'
+                  ? 'bg-[#1C1C1E] border-[#E8C27A] shadow-lg shadow-[#E8C27A]/10 ring-1 ring-[#E8C27A]/50'
+                  : 'bg-[#131314] border-[#262628]'
               }`}
             >
               <div
                 className={`digital-clock-display text-2xl sm:text-3xl font-bold tracking-widest ${
-                  isTopActive ? 'text-[#F5C66A]' : 'text-[#FAF7F2]/80'
+                  isTopActive ? 'text-[#E8C27A]' : 'text-[#FAF7F2]/80'
                 }`}
               >
                 {formatClock(topClockMs)}
@@ -239,28 +239,28 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
           {/* Bottom Player (You) Card & Clock */}
           <div className="flex-1 lg:flex-initial space-y-2">
-            <div className="luxury-card p-3.5 rounded-xl border border-[#2A241F] flex items-center justify-between">
+            <div className="luxury-card p-3.5 rounded-xl border border-[#262628] bg-[#161617] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img
                     src={bottomPlayer?.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${bottomPlayer?.name || 'you'}`}
                     alt={bottomPlayer?.name || 'You'}
-                    className="w-10 h-10 rounded-full bg-[#2A231C] border border-[#D9A441]/40"
+                    className="w-10 h-10 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/40"
                   />
                   <span
-                    className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#1D1915] ${
-                      bottomPlayer?.connected ? 'bg-emerald-400' : 'bg-red-400'
+                    className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#161617] ${
+                      bottomPlayer?.connected ? 'bg-emerald-400' : 'bg-rose-400'
                     }`}
                   />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 font-semibold text-sm text-[#FAF7F2]">
                     <span>{bottomPlayer?.name || 'You'}</span>
-                    <span className="text-[10px] text-[#D9A441] font-bold">
+                    <span className="text-xs text-[#E8C27A] font-bold">
                       {bottomColor === 'w' ? '♔' : '♚'}
                     </span>
                   </div>
-                  <div className="text-xs text-[#9E9689]">{bottomPlayer?.rating || 1600}</div>
+                  <div className="text-xs text-[#A1A1AA]">{bottomPlayer?.rating || 1600}</div>
                 </div>
               </div>
             </div>
@@ -269,13 +269,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             <div
               className={`p-3.5 sm:p-4 rounded-xl border text-center transition-all duration-200 ${
                 isBottomActive
-                  ? 'bg-[#231E18] border-[#D9A441] shadow-lg shadow-[#D9A441]/10 ring-1 ring-[#D9A441]/50'
-                  : 'bg-[#151311] border-[#2A241F]'
+                  ? 'bg-[#1C1C1E] border-[#E8C27A] shadow-lg shadow-[#E8C27A]/10 ring-1 ring-[#E8C27A]/50'
+                  : 'bg-[#131314] border-[#262628]'
               }`}
             >
               <div
                 className={`digital-clock-display text-2xl sm:text-3xl font-bold tracking-widest ${
-                  isBottomActive ? 'text-[#F5C66A]' : 'text-[#FAF7F2]/80'
+                  isBottomActive ? 'text-[#E8C27A]' : 'text-[#FAF7F2]/80'
                 }`}
               >
                 {formatClock(bottomClockMs)}
@@ -299,17 +299,17 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         {/* RIGHT COLUMN: Game Info, Move History & Actions (Desktop: 3 cols) */}
         <div className="lg:col-span-3 flex flex-col gap-4 order-3">
           {/* Game Info & Time Control */}
-          <div className="luxury-card p-4 rounded-xl border border-[#2A241F]">
-            <div className="text-xs font-semibold text-[#9E9689] uppercase tracking-wider mb-2 font-['Cinzel']">
+          <div className="luxury-card p-4 rounded-xl border border-[#262628] bg-[#161617]">
+            <div className="text-xs font-bold text-[#E8C27A] uppercase tracking-wider mb-2 font-condensed">
               Game Info
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-semibold text-[#FAF7F2]">
-                <Clock className="w-4 h-4 text-[#D9A441]" />
+                <Clock className="w-4 h-4 text-[#E8C27A]" />
                 <span>{roomState.timeControl.name}</span>
               </div>
               {materialDiff !== 0 && (
-                <span className="text-xs font-mono font-bold text-[#F5C66A]">
+                <span className="text-xs font-mono font-bold text-[#E8C27A]">
                   {materialDiff > 0 ? `+${materialDiff}` : materialDiff}
                 </span>
               )}
@@ -317,19 +317,19 @@ export const GameScreen: React.FC<GameScreenProps> = ({
           </div>
 
           {/* Move History Table */}
-          <div className="luxury-card p-4 rounded-xl border border-[#2A241F] flex flex-col h-56 sm:h-64">
+          <div className="luxury-card p-4 rounded-xl border border-[#262628] bg-[#161617] flex flex-col h-56 sm:h-64">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-[#9E9689] uppercase tracking-wider font-['Cinzel']">
+              <span className="text-xs font-bold text-[#E8C27A] uppercase tracking-wider font-condensed">
                 Move History
               </span>
-              <span className="text-[11px] text-[#9E9689] font-mono">
+              <span className="text-[11px] text-[#A1A1AA] font-mono">
                 {roomState.history.length} moves
               </span>
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-1 pr-1 font-mono text-xs">
               {movePairs.length === 0 ? (
-                <div className="h-full flex items-center justify-center text-xs text-[#9E9689]/60">
+                <div className="h-full flex items-center justify-center text-xs text-[#71717A]">
                   Game in progress...
                 </div>
               ) : (
@@ -339,14 +339,14 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                     <div
                       key={pair.num}
                       className={`grid grid-cols-6 py-1 px-2 rounded ${
-                        isLatest ? 'bg-[#2A231C]/60 text-[#F5C66A]' : 'text-[#FAF7F2]'
+                        isLatest ? 'bg-[#1C1C1E] text-[#E8C27A]' : 'text-[#FAF7F2]'
                       }`}
                     >
-                      <span className="col-span-1 text-[#9E9689]">{pair.num}.</span>
-                      <span className={`col-span-2 font-semibold ${isLatest && !pair.black ? 'text-[#F5C66A]' : ''}`}>
+                      <span className="col-span-1 text-[#71717A]">{pair.num}.</span>
+                      <span className={`col-span-2 font-semibold ${isLatest && !pair.black ? 'text-[#E8C27A]' : ''}`}>
                         {pair.white || ''}
                       </span>
-                      <span className={`col-span-2 font-semibold ${isLatest && pair.black ? 'text-[#F5C66A]' : ''}`}>
+                      <span className={`col-span-2 font-semibold ${isLatest && pair.black ? 'text-[#E8C27A]' : ''}`}>
                         {pair.black || ''}
                       </span>
                     </div>
@@ -362,15 +362,15 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             <button
               onClick={onOfferDraw}
               disabled={roomState.status !== 'IN_PROGRESS'}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#1D1915] border border-[#D9A441]/40 text-[#FAF7F2] text-xs font-semibold hover:border-[#F5C66A] hover:bg-[#2A231C] active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-[#E4E4E7] text-xs font-semibold hover:border-[#E8C27A]/50 hover:text-[#E8C27A] active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer font-condensed tracking-wider uppercase"
             >
-              <Handshake className="w-4 h-4 text-[#D9A441]" />
+              <Handshake className="w-4 h-4 text-[#E8C27A]" />
               <span>Offer Draw</span>
             </button>
 
             {showResignConfirm ? (
-              <div className="p-2.5 rounded-xl bg-red-950/40 border border-red-500/50 space-y-2">
-                <div className="text-xs text-red-200 text-center font-medium">
+              <div className="p-2.5 rounded-xl bg-rose-950/40 border border-rose-500/40 space-y-2">
+                <div className="text-xs text-rose-200 text-center font-medium">
                   Confirm resignation?
                 </div>
                 <div className="flex gap-2">
@@ -379,13 +379,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                       setShowResignConfirm(false);
                       onResign();
                     }}
-                    className="flex-1 py-1.5 rounded-lg bg-red-600 text-white text-xs font-bold hover:bg-red-700 cursor-pointer"
+                    className="flex-1 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 cursor-pointer font-condensed uppercase tracking-wider"
                   >
                     Yes, Resign
                   </button>
                   <button
                     onClick={() => setShowResignConfirm(false)}
-                    className="flex-1 py-1.5 rounded-lg bg-[#2A231C] text-xs text-[#FAF7F2] hover:bg-[#382F26] cursor-pointer"
+                    className="flex-1 py-1.5 rounded-lg bg-[#1C1C1E] border border-[#2E2E30] text-xs text-[#FAF7F2] hover:bg-[#28282A] cursor-pointer font-condensed uppercase tracking-wider"
                   >
                     Cancel
                   </button>
@@ -395,38 +395,38 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               <button
                 onClick={() => setShowResignConfirm(true)}
                 disabled={roomState.status !== 'IN_PROGRESS'}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#2A1616] border border-red-500/30 text-red-300 text-xs font-semibold hover:bg-red-900/30 hover:border-red-500/60 active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold hover:bg-rose-500/20 hover:border-rose-500/50 active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer font-condensed tracking-wider uppercase"
               >
-                <Flag className="w-4 h-4 text-red-400" />
+                <Flag className="w-4 h-4 text-rose-400" />
                 <span>Resign</span>
               </button>
             )}
 
             <button
               onClick={flipBoard}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#1D1915] border border-[#2A241F] text-[#FAF7F2] text-xs font-semibold hover:border-[#D9A441]/40 hover:bg-[#2A231C] active:scale-[0.99] transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-[#A1A1AA] hover:text-[#FAF7F2] text-xs font-semibold hover:border-[#38383A] active:scale-[0.99] transition-all cursor-pointer font-condensed tracking-wider uppercase"
             >
-              <RotateCw className="w-4 h-4 text-[#9E9689]" />
+              <RotateCw className="w-4 h-4 text-[#A1A1AA]" />
               <span>Flip Board</span>
             </button>
           </div>
 
           {/* Sound & Settings Icons */}
-          <div className="flex items-center justify-between pt-2 border-t border-[#2A241F]">
+          <div className="flex items-center justify-between pt-2 border-t border-[#262628]">
             <button
               onClick={toggleSound}
-              className="p-2.5 rounded-xl bg-[#1D1915] border border-[#2A241F] text-[#FAF7F2] hover:border-[#D9A441]/40 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-[#A1A1AA] hover:text-[#FAF7F2] hover:border-[#E8C27A]/40 transition-colors cursor-pointer"
               title={isMuted ? 'Unmute' : 'Mute'}
             >
-              {isMuted ? <VolumeX className="w-4 h-4 text-[#9E9689]" /> : <Volume2 className="w-4 h-4 text-[#D9A441]" />}
+              {isMuted ? <VolumeX className="w-4 h-4 text-[#71717A]" /> : <Volume2 className="w-4 h-4 text-[#E8C27A]" />}
             </button>
 
             <button
               onClick={() => setShowInfoModal(true)}
-              className="p-2.5 rounded-xl bg-[#1D1915] border border-[#2A241F] text-[#FAF7F2] hover:border-[#D9A441]/40 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-[#A1A1AA] hover:text-[#FAF7F2] hover:border-[#E8C27A]/40 transition-colors cursor-pointer"
               title="Tournament Info"
             >
-              <Info className="w-4 h-4 text-[#9E9689]" />
+              <Info className="w-4 h-4 text-[#A1A1AA]" />
             </button>
           </div>
         </div>
@@ -444,12 +444,12 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
       {/* Info Modal */}
       {showInfoModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="luxury-card-gold p-6 rounded-2xl max-w-sm w-full border border-[#D9A441]/40 bg-[#1D1915] text-left">
-            <h3 className="font-['Cinzel'] text-lg font-bold text-[#F5C66A] mb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="luxury-card-gold p-6 rounded-2xl max-w-sm w-full border border-[#E8C27A]/30 bg-[#161617] text-left">
+            <h3 className="font-condensed text-xl font-bold text-[#E8C27A] mb-3 uppercase tracking-wider">
               Tournament Match Info
             </h3>
-            <div className="space-y-2 text-xs text-[#9E9689] mb-6">
+            <div className="space-y-2 text-xs text-[#A1A1AA] mb-6">
               <div>
                 <strong className="text-[#FAF7F2]">Room:</strong> #{roomState.roomId}
               </div>
@@ -465,7 +465,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             </div>
             <button
               onClick={() => setShowInfoModal(false)}
-              className="w-full py-2 rounded-xl bg-[#2A231C] border border-[#D9A441]/30 text-xs font-semibold text-[#FAF7F2] hover:bg-[#382F26] cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-xs font-semibold text-[#FAF7F2] hover:bg-[#28282A] cursor-pointer font-condensed uppercase tracking-wider"
             >
               Close
             </button>

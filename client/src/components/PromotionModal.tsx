@@ -17,13 +17,13 @@ export const PromotionModal: React.FC<PromotionModalProps> = ({ color, onSelect,
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm animate-fade-in">
-      <div className="luxury-card-gold p-6 rounded-2xl max-w-sm w-full mx-4 border border-[#D9A441]/40 bg-[#1D1915] text-center shadow-2xl">
-        <h3 className="font-['Cinzel'] text-xl font-bold text-[#F5C66A] tracking-wider mb-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div className="luxury-card-gold p-6 rounded-2xl max-w-sm w-full mx-4 border border-[#E8C27A]/30 bg-[#161617] text-center shadow-2xl">
+        <h3 className="font-condensed text-2xl font-bold text-[#E8C27A] tracking-wider uppercase mb-2">
           Promote Pawn
         </h3>
-        <p className="text-xs text-[#9E9689] mb-6">
-          Choose a prestigious piece to promote your pawn.
+        <p className="text-xs text-[#A1A1AA] mb-6">
+          Choose a piece to promote your pawn.
         </p>
 
         <div className="grid grid-cols-4 gap-3 mb-6">
@@ -31,12 +31,12 @@ export const PromotionModal: React.FC<PromotionModalProps> = ({ color, onSelect,
             <button
               key={type}
               onClick={() => onSelect(type)}
-              className="flex flex-col items-center justify-center p-3 rounded-xl bg-[#2A231C] border border-[#D9A441]/20 hover:border-[#F5C66A] hover:bg-[#382F26] hover:scale-105 active:scale-95 transition-all duration-150 group cursor-pointer"
+              className="flex flex-col items-center justify-center p-3 rounded-xl bg-[#131314] border border-[#262628] hover:border-[#E8C27A] hover:bg-[#1C1C1E] hover:scale-105 active:scale-95 transition-all duration-150 group cursor-pointer"
             >
               <div className="w-12 h-12 mb-1 flex items-center justify-center">
                 <ChessPiece type={type} color={color} size={44} />
               </div>
-              <span className="text-[11px] font-medium text-[#FAF7F2] group-hover:text-[#F5C66A]">
+              <span className="text-[11px] font-medium text-[#FAF7F2] group-hover:text-[#E8C27A]">
                 {name}
               </span>
             </button>
@@ -45,7 +45,7 @@ export const PromotionModal: React.FC<PromotionModalProps> = ({ color, onSelect,
 
         <button
           onClick={onCancel}
-          className="text-xs text-[#9E9689] hover:text-[#FAF7F2] transition-colors py-1 cursor-pointer"
+          className="text-xs text-[#A1A1AA] hover:text-[#FAF7F2] transition-colors py-1 cursor-pointer font-condensed uppercase tracking-wider"
         >
           Cancel Move
         </button>

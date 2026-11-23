@@ -63,12 +63,12 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
 
   return (
     <div className="flex-1 flex items-center justify-center p-4">
-      <div className="luxury-card-gold p-6 sm:p-10 rounded-2xl max-w-lg w-full border border-[#D9A441]/40 bg-[#1D1915] text-center shadow-2xl relative">
+      <div className="luxury-card-gold p-6 sm:p-10 rounded-2xl max-w-lg w-full border border-[#E8C27A]/25 bg-[#161617] text-center shadow-2xl relative">
         {/* Subtle glowing halo */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#D9A441]/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-32 bg-[#E8C27A]/10 blur-3xl pointer-events-none" />
 
         {/* Room Header Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2A231C] border border-[#D9A441]/30 text-xs font-semibold text-[#D9A441] mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1C1C1E] border border-[#E8C27A]/30 text-xs font-semibold text-[#E8C27A] mb-6">
           <span>ROOM #{roomId}</span>
           <span>•</span>
           <span>{timeControl.name}</span>
@@ -76,21 +76,21 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
         </div>
 
         {/* Player Status Display */}
-        <div className="flex items-center justify-between p-4 rounded-xl bg-[#161311] border border-[#2A241F] mb-6 text-left">
+        <div className="flex items-center justify-between p-4 rounded-xl bg-[#131314] border border-[#262628] mb-6 text-left">
           <div className="flex items-center gap-3">
             <img
               src={player.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(player.name)}`}
               alt={player.name}
-              className="w-12 h-12 rounded-full border-2 border-[#D9A441]/50 bg-[#2A231C]"
+              className="w-12 h-12 rounded-full border-2 border-[#E8C27A]/40 bg-[#1C1C1E]"
             />
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-semibold text-sm text-[#FAF7F2]">{player.name}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#D9A441]/20 text-[#F5C66A] font-bold">
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#E8C27A]/15 text-[#E8C27A] border border-[#E8C27A]/30 font-bold uppercase">
                   WHITE
                 </span>
               </div>
-              <div className="text-xs text-[#9E9689] flex items-center gap-2 mt-0.5">
+              <div className="text-xs text-[#A1A1AA] flex items-center gap-2 mt-0.5">
                 <span>Rating: {player.rating || 1600}</span>
                 <span className="text-emerald-400 font-medium flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Connected
@@ -104,12 +104,12 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
         </div>
 
         {/* Opponent Status Waiting Box */}
-        <div className="p-4 rounded-xl bg-[#161311]/60 border border-dashed border-[#D9A441]/30 mb-8">
-          <div className="flex items-center justify-center gap-2 text-xs font-semibold text-[#D9A441] uppercase tracking-wider mb-2">
-            <Users className="w-4 h-4 animate-pulse" />
+        <div className="p-5 rounded-2xl bg-[#131314] border border-[#262628] mb-7">
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold text-[#E8C27A] uppercase tracking-wider mb-2 font-condensed">
+            <Users className="w-4 h-4 animate-pulse text-[#E8C27A]" />
             <span>Opponent Not Connected</span>
           </div>
-          <p className="text-sm text-[#FAF7F2]/80 font-['Outfit'] mb-4">
+          <p className="text-xs sm:text-sm text-[#A1A1AA] mb-4">
             Waiting for your opponent to enter the arena...
           </p>
 
@@ -121,16 +121,16 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
                   cx="50"
                   cy="50"
                   r="42"
-                  className="stroke-[#2A241F]"
-                  strokeWidth="6"
+                  className="stroke-[#262628]"
+                  strokeWidth="5"
                   fill="none"
                 />
                 <circle
                   cx="50"
                   cy="50"
                   r="42"
-                  className="stroke-[#D9A441] transition-all duration-500 ease-linear"
-                  strokeWidth="6"
+                  className="stroke-[#E8C27A] transition-all duration-500 ease-linear"
+                  strokeWidth="5"
                   strokeDasharray="264"
                   strokeDashoffset={264 - (264 * progressPercent) / 100}
                   strokeLinecap="round"
@@ -138,17 +138,17 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
                 />
               </svg>
               <div className="absolute flex flex-col items-center justify-center">
-                <span className="font-['JetBrains_Mono'] text-2xl font-bold tracking-tight text-[#FAF7F2]">
+                <span className="font-mono text-2xl font-bold tracking-tight text-[#FAF7F2]">
                   {formattedTime}
                 </span>
-                <span className="text-[10px] text-[#9E9689] uppercase tracking-widest">
+                <span className="text-[10px] text-[#A1A1AA] uppercase tracking-widest font-condensed">
                   Remaining
                 </span>
               </div>
             </div>
 
-            <div className="text-[11px] text-[#9E9689] flex items-center gap-1.5">
-              <ShieldAlert className="w-3.5 h-3.5 text-[#F5C66A]" />
+            <div className="text-[11px] text-[#A1A1AA] flex items-center gap-1.5 mt-2">
+              <ShieldAlert className="w-3.5 h-3.5 text-[#E8C27A]" />
               <span>Walkover victory awarded if opponent fails to connect.</span>
             </div>
           </div>
@@ -158,15 +158,15 @@ export const WaitingScreen: React.FC<WaitingScreenProps> = ({
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={copyRoomInvite}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#2A231C] border border-[#D9A441]/40 text-[#FAF7F2] text-xs font-semibold hover:border-[#F5C66A] hover:bg-[#382F26] transition-all cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#1C1C1E] border border-[#2E2E30] text-[#E4E4E7] text-xs font-semibold hover:border-[#E8C27A]/40 hover:text-[#FAF7F2] transition-all cursor-pointer font-condensed uppercase tracking-wider"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#D9A441]" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#E8C27A]" />}
             <span>{copied ? 'Link Copied!' : 'Copy Tournament Link'}</span>
           </button>
 
           <button
             onClick={onCancel}
-            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-transparent border border-red-500/30 text-red-300 text-xs font-semibold hover:bg-red-500/10 hover:border-red-500/50 transition-all cursor-pointer"
+            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold hover:bg-rose-500/20 transition-all cursor-pointer font-condensed uppercase tracking-wider"
           >
             <LogOut className="w-4 h-4" />
             <span>Cancel</span>
