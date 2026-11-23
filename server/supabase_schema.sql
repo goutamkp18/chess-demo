@@ -1,7 +1,7 @@
 -- =====================================================================
 -- CHESS ARENA - SUPABASE DATABASE SCHEMA
 -- Execute this script in the Supabase SQL Editor:
--- https://supabase.com/dashboard/project/_/sql
+-- https://supabase.com/dashboard/project/eekzwxitffjfnjzlmvwn/sql
 -- =====================================================================
 
 -- 1. Enable UUID Extension (standard in Postgres)
@@ -46,34 +46,38 @@ CREATE INDEX IF NOT EXISTS idx_arena_matches_created_at ON public.arena_matches 
 ALTER TABLE public.arena_rooms ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.arena_matches ENABLE ROW LEVEL SECURITY;
 
--- 5. Policies: Allow read access to all clients; allow insert/update from service role or authenticated backend
+-- 5. Policies: Safely drop if exists, then recreate
 DROP POLICY IF EXISTS "Public Read Arena Rooms" ON public.arena_rooms;
-CREATE POLICY "Public Read Arena Rooms"
+DROP POLICY IF EXISTS "Arena Rooms Select" ON public.arena_rooms;
+CREATE POLICY "Arena Rooms Select"
   ON public.arena_rooms
   FOR SELECT
   USING (true);
 
 DROP POLICY IF EXISTS "Public Modify Arena Rooms" ON public.arena_rooms;
-CREATE POLICY "Public Modify Arena Rooms"
+DROP POLICY IF EXISTS "Arena Rooms All" ON public.arena_rooms;
+CREATE POLICY "Arena Rooms All"
   ON public.arena_rooms
   FOR ALL
   USING (true)
   WITH CHECK (true);
 
 DROP POLICY IF EXISTS "Public Read Arena Matches" ON public.arena_matches;
-CREATE POLICY "Public Read Arena Matches"
+DROP POLICY IF EXISTS "Arena Matches Select" ON public.arena_matches;
+CREATE POLICY "Arena Matches Select"
   ON public.arena_matches
   FOR SELECT
   USING (true);
 
 DROP POLICY IF EXISTS "Public Modify Arena Matches" ON public.arena_matches;
-CREATE POLICY "Public Modify Arena Matches"
+DROP POLICY IF EXISTS "Arena Matches All" ON public.arena_matches;
+CREATE POLICY "Arena Matches All"
   ON public.arena_matches
   FOR ALL
   USING (true)
   WITH CHECK (true);
 
--- 6. Enable Supabase Realtime (Optional: allows live frontend listeners and spectator dashboards)
+-- 6. Enable Supabase Realtime
 DO $$
 BEGIN
   IF EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') THEN

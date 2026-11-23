@@ -31,7 +31,7 @@ export const Login = () => {
   const [resendSuccess, setResendSuccess] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
-  const { login, isLoggedIn, token } = useAuth();
+  const { login, isLoggedIn, token, signInWithGoogle } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -125,8 +125,12 @@ export const Login = () => {
     }
   };
 
-  const handleGoogleComingSoon = () => {
-    showToast('Google Sign-In is coming soon in the next update.', 'info');
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      showToast(err.message || 'Failed to initiate Google Sign-In', 'error');
+    }
   };
 
   const handleForgotPassword = () => {
@@ -531,7 +535,7 @@ export const Login = () => {
               <div className="relative group w-full">
                 <button
                   type="button"
-                  onClick={handleGoogleComingSoon}
+                  onClick={handleGoogleSignIn}
                   className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#1A1A1C] border border-[#2c2c2f] hover:border-[#e8c27a]/40 text-zinc-300 hover:text-white font-medium text-xs sm:text-sm flex items-center justify-center gap-3 transition-all active:scale-[0.99]"
                 >
                   <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">

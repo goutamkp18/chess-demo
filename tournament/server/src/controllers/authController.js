@@ -11,6 +11,7 @@ import { sendVerificationEmail, sendPasswordResetEmail, sendAccountApprovedEmail
 import { getPermissions } from '../middleware/authMiddleware.js';
 import { verifyGoogleIdToken } from '../services/googleVerifier.js';
 import { logAudit } from '../utils/auditLogger.js';
+import { supabase } from '../config/supabase.js';
 
 const BCRYPT_ROUNDS = 12;
 
@@ -299,6 +300,26 @@ export const checkUsername = async (req, res, next) => {
       });
     }
 
+    // Check Supabase user_profiles if available
+    if (supabase) {
+      try {
+        const { data: sbProfile } = await supabase
+          .from('user_profiles')
+          .select('id')
+          .ilike('username', username)
+          .maybeSingle();
+
+        if (sbProfile) {
+          return res.status(200).json({
+            available: false,
+            error: 'This username is already taken. Please choose another.'
+          });
+        }
+      } catch (err) {
+        // Fallback to local table check
+      }
+    }
+
     const [rows] = await pool.query(
       'SELECT user_id FROM app_user WHERE LOWER(username) = LOWER(?) LIMIT 1',
       [username]
@@ -338,6 +359,26 @@ export const checkEmail = async (req, res, next) => {
         available: false,
         error: 'Invalid email address format'
       });
+    }
+
+    // Check Supabase user_profiles if available
+    if (supabase) {
+      try {
+        const { data: sbProfile } = await supabase
+          .from('user_profiles')
+          .select('id')
+          .ilike('email', email)
+          .maybeSingle();
+
+        if (sbProfile) {
+          return res.status(200).json({
+            available: false,
+            error: 'An account with this email address already exists'
+          });
+        }
+      } catch (err) {
+        // Fallback to local table check
+      }
     }
 
     const [rows] = await pool.query(

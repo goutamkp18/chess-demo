@@ -1,9 +1,10 @@
 import { verifyToken } from '../utils/jwt.js';
 import { pool } from '../config/db.js';
 import { logAudit } from '../utils/auditLogger.js';
+import { supabase } from '../config/supabase.js';
 
 /**
- * Validates JWT bearer token and re-verifies user status=ACTIVE in MySQL.
+ * Validates JWT bearer token against Supabase Auth, or falls back to local JWT.
  */
 export const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -12,6 +13,55 @@ export const authMiddleware = async (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
+
+  // 1. Try Supabase Auth verification first
+  if (supabase) {
+    try {
+      const { data: { user: sbUser }, error: sbErr } = await supabase.auth.getUser(token);
+      if (sbUser && !sbErr) {
+        // Fetch profile from Supabase user_profiles
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', sbUser.id)
+          .maybeSingle();
+
+        if (profile) {
+          req.user = {
+            user_id: profile.id,
+            id: profile.id,
+            email: profile.email || sbUser.email,
+            username: profile.username,
+            full_name: profile.full_name,
+            role: profile.role || 'PLAYER',
+            status: 'ACTIVE',
+            approval_status: profile.approval_status || 'APPROVED',
+            approval_note: profile.approval_note,
+            player_id: profile.player_id,
+            country_code: profile.country_code,
+          };
+          return next();
+        }
+
+        // Supabase user without profile row yet
+        req.user = {
+          user_id: sbUser.id,
+          id: sbUser.id,
+          email: sbUser.email,
+          full_name: sbUser.user_metadata?.full_name || sbUser.email,
+          role: 'PLAYER',
+          status: 'ACTIVE',
+          approval_status: 'APPROVED',
+          player_id: null,
+        };
+        return next();
+      }
+    } catch {
+      // Continue to local JWT fallback
+    }
+  }
+
+  // 2. Fallback to local JWT verification
   let decoded;
   try {
     decoded = verifyToken(token);
