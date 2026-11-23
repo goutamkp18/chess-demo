@@ -161,20 +161,38 @@ export const Dashboard = () => {
     }
   };
 
-  if (loading) {
+  if (loading && !data) {
     return <LoadingScreen message="Loading personalized dashboard metrics..." />;
   }
 
-  if (!data) return null;
+  const activeData = data || {
+    role: user?.role || 'PLAYER',
+    approval_status: user?.approval_status || 'APPROVED',
+    profile: {
+      name: user?.full_name || user?.username || 'Player',
+      email: user?.email,
+      current_rating: user?.current_rating || 1200
+    },
+    current_rating: user?.current_rating || 1200,
+    rating_history: [],
+    wins: 0,
+    draws: 0,
+    losses: 0,
+    win_rate: 0,
+    win_pct: 0,
+    enrollments: [],
+    open_tournaments: [],
+    pending_games: []
+  };
 
-  const role = data.role || user?.role;
+  const role = activeData.role || user?.role || 'PLAYER';
 
   /* =========================================================================
      1. PLAYER DASHBOARD (Matches Row 1 Col 3 of Reference)
      ========================================================================= */
   if (role === 'PLAYER') {
-    const isApproved = data.approval_status === 'APPROVED';
-    const chartHistory = (data.rating_history || [])
+    const isApproved = activeData.approval_status === 'APPROVED';
+    const chartHistory = (activeData.rating_history || [])
       .slice()
       .reverse()
       .map((item, index) => ({
@@ -192,11 +210,11 @@ export const Dashboard = () => {
             { label: 'Mar', rating: 1530 },
             { label: 'Apr', rating: 1580 },
             { label: 'May', rating: 1610 },
-            { label: 'Jun', rating: Number(data.current_rating || 1628) }
+            { label: 'Jun', rating: Number(activeData.current_rating || 1200) }
           ];
 
-    const totalMatches = (data.wins || 0) + (data.draws || 0) + (data.losses || 0);
-    const winRate = totalMatches > 0 ? ((data.wins || 0) / totalMatches) * 100 : Number(data.win_rate || data.win_pct || 67);
+    const totalMatches = (activeData.wins || 0) + (activeData.draws || 0) + (activeData.losses || 0);
+    const winRate = totalMatches > 0 ? ((activeData.wins || 0) / totalMatches) * 100 : Number(activeData.win_rate || activeData.win_pct || 0);
 
     return (
       <div className="space-y-6 pb-8">
@@ -209,7 +227,7 @@ export const Dashboard = () => {
                 Dashboard
               </h1>
               <p className="text-xs text-zinc-400 mt-0.5">
-                Welcome back, {data.profile?.name || user?.full_name || 'Player'}
+                Welcome back, {activeData.profile?.name || user?.full_name || 'Player'}
               </p>
             </div>
           </div>
@@ -221,14 +239,14 @@ export const Dashboard = () => {
         {/* Live Tournament Match Entry Banner */}
         <ChessArenaButton
           variant="banner"
-          tournament={data.enrollments && data.enrollments.length > 0 ? data.enrollments[0] : null}
+          tournament={activeData.enrollments && activeData.enrollments.length > 0 ? activeData.enrollments[0] : null}
           game={{
             board_no: 1,
-            white_player_name: data.profile?.name || user?.full_name || 'My Player',
+            white_player_name: activeData.profile?.name || user?.full_name || 'My Player',
             black_player_name: 'Opponent',
-            white_player_rating: data.current_rating || 1600,
-            black_player_rating: 1600,
-            tournament_id: data.enrollments && data.enrollments.length > 0 ? data.enrollments[0].tournament_id : '1',
+            white_player_rating: activeData.current_rating || 1200,
+            black_player_rating: 1200,
+            tournament_id: activeData.enrollments && activeData.enrollments.length > 0 ? activeData.enrollments[0].tournament_id : '1',
           }}
         />
 
@@ -240,9 +258,9 @@ export const Dashboard = () => {
             </span>
             <div className="flex items-baseline gap-2 mt-1">
               <span className="text-2xl sm:text-3xl font-black text-white">
-                {data.current_rating || 1628}
+                {activeData.current_rating || 1200}
               </span>
-              <span className="text-xs font-bold text-emerald-400">↑ +24</span>
+              <span className="text-xs font-bold text-emerald-400">±0</span>
             </div>
           </div>
 
@@ -252,7 +270,7 @@ export const Dashboard = () => {
             </span>
             <div className="mt-1">
               <span className="text-2xl sm:text-3xl font-black text-white">
-                {(data.enrollments || []).length || 6}
+                {(activeData.enrollments || []).length}
               </span>
             </div>
           </div>
@@ -263,7 +281,7 @@ export const Dashboard = () => {
             </span>
             <div className="mt-1">
               <span className="text-2xl sm:text-3xl font-black text-white">
-                {totalMatches || 48}
+                {totalMatches}
               </span>
             </div>
           </div>
@@ -336,33 +354,34 @@ export const Dashboard = () => {
               </div>
 
               <div className="space-y-3 flex-1 overflow-y-auto">
-                {(!data.enrollments || data.enrollments.length === 0) ? (
-                  // Fallback mock items matching reference screenshot if no live enrollments yet
-                  [
-                    { name: 'RVCE Open 2026', status: 'Ongoing' },
-                    { name: 'Mysuru Rapid Cup', status: 'Completed' },
-                    { name: 'Bengaluru Blitz', status: 'Completed' }
-                  ].map((t, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 rounded-xl bg-[#171717] border border-[#2a2a2a] flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#262626] border border-[#383838] flex items-center justify-center text-[#C6A15B]">
-                          <Trophy className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-bold text-white">{t.name}</p>
-                          <p className="text-[10px] text-zinc-400">Swiss System</p>
-                        </div>
-                      </div>
-                      <Badge variant={t.status} size="sm">
-                        {t.status}
-                      </Badge>
+                {(!activeData.enrollments || activeData.enrollments.length === 0) ? (
+                  (!activeData.open_tournaments || activeData.open_tournaments.length === 0) ? (
+                    <div className="py-8 text-center text-zinc-500 text-xs">
+                      No tournaments found. Check back soon!
                     </div>
-                  ))
+                  ) : (
+                    activeData.open_tournaments.slice(0, 3).map((t) => (
+                      <div
+                        key={t.tournament_id}
+                        className="p-3 rounded-xl bg-[#171717] border border-[#2a2a2a] flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-[#262626] border border-[#383838] flex items-center justify-center text-[#C6A15B]">
+                            <Trophy className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <p className="text-xs font-bold text-white">{t.name}</p>
+                            <p className="text-[10px] text-zinc-400">{t.format || 'Standard'}</p>
+                          </div>
+                        </div>
+                        <Badge variant={t.status || 'UPCOMING'} size="sm">
+                          {t.status || 'UPCOMING'}
+                        </Badge>
+                      </div>
+                    ))
+                  )
                 ) : (
-                  data.enrollments.slice(0, 4).map((enr) => (
+                  activeData.enrollments.slice(0, 4).map((enr) => (
                     <div
                       key={enr.tournament_id}
                       className="p-3 rounded-xl bg-[#171717] border border-[#2a2a2a] flex items-center justify-between"
@@ -395,7 +414,7 @@ export const Dashboard = () => {
         </div>
 
         {/* Lower Row: Open Tournaments Available to Join */}
-        {data.open_tournaments && data.open_tournaments.length > 0 && (
+        {activeData.open_tournaments && activeData.open_tournaments.length > 0 && (
           <div className="p-5 rounded-2xl bg-[#202020] border border-[#303030]">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-condensed font-bold uppercase tracking-wider text-white">
@@ -406,7 +425,7 @@ export const Dashboard = () => {
               </Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {data.open_tournaments.slice(0, 3).map((t) => (
+              {activeData.open_tournaments.slice(0, 3).map((t) => (
                 <div
                   key={t.tournament_id}
                   className="p-4 rounded-xl bg-[#171717] border border-[#2a2a2a] flex flex-col justify-between"
@@ -441,7 +460,7 @@ export const Dashboard = () => {
      2. ORGANIZER DASHBOARD
      ========================================================================= */
   if (role === 'ORGANIZER') {
-    const isApproved = data.approval_status === 'APPROVED';
+    const isApproved = activeData.approval_status === 'APPROVED';
     const formatOutcomeResult = (outcome) => {
       if (outcome === 'WHITE') return '1 - 0';
       if (outcome === 'BLACK') return '0 - 1';
@@ -482,7 +501,7 @@ export const Dashboard = () => {
             </span>
             <div className="mt-1">
               <span className="text-3xl font-black text-white">
-                {(data.my_tournaments || []).length}
+                {(activeData.my_tournaments || []).length}
               </span>
             </div>
           </div>
@@ -492,7 +511,7 @@ export const Dashboard = () => {
             </span>
             <div className="mt-1">
               <span className="text-3xl font-black text-white">
-                {data.enrolled_players || data.enrolled_players_count || 0}
+                {activeData.enrolled_players || activeData.enrolled_players_count || 0}
               </span>
             </div>
           </div>
@@ -502,7 +521,7 @@ export const Dashboard = () => {
             </span>
             <div className="mt-1">
               <span className="text-3xl font-black text-white">
-                {(data.recent_results || []).length}
+                {(activeData.recent_results || []).length}
               </span>
             </div>
           </div>
@@ -526,14 +545,14 @@ export const Dashboard = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#262626]">
-                {(!data.my_tournaments || data.my_tournaments.length === 0) ? (
+                {(!activeData.my_tournaments || activeData.my_tournaments.length === 0) ? (
                   <tr>
                     <td colSpan={4} className="py-10 text-center text-zinc-500 text-xs">
                       No tournaments created yet.
                     </td>
                   </tr>
                 ) : (
-                  data.my_tournaments.map((t) => (
+                  activeData.my_tournaments.map((t) => (
                     <tr key={t.tournament_id} className="hover:bg-[#262626] transition-colors">
                       <td className="py-3 px-4">
                         <Link
