@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import pg from 'pg';
-import type { TimeControl, MatchResult, ChessMoveRecord, RoomState } from '../types/index.js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { TimeControl, ChessMoveRecord } from '../types/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +31,17 @@ export interface PersistedMatch {
   fen: string;
 }
 
+export interface DbStatusInfo {
+  provider: 'supabase' | 'postgresql' | 'local';
+  supabaseConnected: boolean;
+  pgConnected: boolean;
+  localPath: string;
+  cachedRooms: number;
+  cachedMatches: number;
+}
+
 class ChessArenaDatabase {
+  private supabase: SupabaseClient | null = null;
   private pgPool: pg.Pool | null = null;
   private localDbPath: string;
   private memoryCache: {
@@ -55,7 +66,28 @@ class ChessArenaDatabase {
   }
 
   private async initDatabase() {
-    // 1. If DATABASE_URL is provided (PostgreSQL / Supabase on Render), connect
+    // 1. Initialize local cache from disk first for instantaneous sub-millisecond lookups
+    this.loadFromDisk();
+
+    // 2. Initialize Supabase Client SDK if SUPABASE_URL and key are provided
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.SUPABASE_ANON_KEY ||
+      process.env.SUPABASE_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+      try {
+        this.supabase = createClient(supabaseUrl, supabaseKey, {
+          auth: { persistSession: false },
+        });
+        console.log(`✓ Connected to Supabase Cloud at ${supabaseUrl}`);
+      } catch (err) {
+        console.warn('Failed to initialize Supabase client:', err);
+      }
+    }
+
+    // 3. Initialize direct PostgreSQL pool if DATABASE_URL is provided (Supabase pooler / Render PG)
     if (process.env.DATABASE_URL) {
       try {
         this.pgPool = new pg.Pool({
@@ -87,16 +119,13 @@ class ChessArenaDatabase {
             fen TEXT NOT NULL
           );
         `);
-        console.log('✓ Connected to PostgreSQL / Supabase storage');
-        return;
+        console.log('✓ Direct PostgreSQL connection pool active for Chess Arena');
       } catch (err) {
-        console.warn('PostgreSQL connection unavailable, falling back to ACID local persistence:', err);
+        console.warn('Direct PostgreSQL connection unavailable, relying on Supabase SDK / local persistence:', err);
       }
     }
 
-    // 2. Local zero-dependency persistent JSON store
-    this.loadFromDisk();
-    console.log(`✓ Local database initialized at ${this.localDbPath}`);
+    console.log(`✓ Local ACID persistent cache active at ${this.localDbPath}`);
   }
 
   private loadFromDisk() {
@@ -104,7 +133,11 @@ class ChessArenaDatabase {
       if (fs.existsSync(this.localDbPath)) {
         const raw = fs.readFileSync(this.localDbPath, 'utf-8');
         this.memoryCache = JSON.parse(raw);
-        console.log(`✓ Loaded ${Object.keys(this.memoryCache.rooms).length} rooms and ${Object.keys(this.memoryCache.matches).length} completed matches from disk.`);
+        console.log(
+          `✓ Loaded ${Object.keys(this.memoryCache.rooms).length} rooms and ${
+            Object.keys(this.memoryCache.matches).length
+          } completed matches from disk.`
+        );
       }
     } catch (err) {
       console.error('Error reading database file from disk:', err);
@@ -123,9 +156,35 @@ class ChessArenaDatabase {
   }
 
   public async saveRoom(room: PersistedRoom): Promise<void> {
+    // 1. Update in-memory & local disk
     this.memoryCache.rooms[room.roomId] = room;
     this.saveToDisk();
 
+    // 2. Persist to Supabase if configured
+    if (this.supabase) {
+      try {
+        const { error } = await this.supabase
+          .from('arena_rooms')
+          .upsert(
+            {
+              room_id: room.roomId,
+              password_hash: room.passwordHash,
+              time_control: room.timeControl,
+              created_at: room.createdAt,
+              status: room.status,
+            },
+            { onConflict: 'room_id' }
+          );
+
+        if (error) {
+          console.error('Error persisting room to Supabase:', error.message);
+        }
+      } catch (err) {
+        console.error('Supabase saveRoom error:', err);
+      }
+    }
+
+    // 3. Persist to direct PostgreSQL if configured
     if (this.pgPool) {
       try {
         await this.pgPool.query(
@@ -141,6 +200,30 @@ class ChessArenaDatabase {
   }
 
   public async getRoom(roomId: string): Promise<PersistedRoom | null> {
+    // 1. Try Supabase first if connected
+    if (this.supabase) {
+      try {
+        const { data, error } = await this.supabase
+          .from('arena_rooms')
+          .select('*')
+          .eq('room_id', roomId)
+          .maybeSingle();
+
+        if (data && !error) {
+          return {
+            roomId: data.room_id,
+            passwordHash: data.password_hash,
+            timeControl: data.time_control,
+            createdAt: Number(data.created_at),
+            status: data.status,
+          };
+        }
+      } catch (err) {
+        console.error('Supabase getRoom error:', err);
+      }
+    }
+
+    // 2. Try direct PostgreSQL
     if (this.pgPool) {
       try {
         const res = await this.pgPool.query(`SELECT * FROM arena_rooms WHERE room_id = $1`, [roomId]);
@@ -158,13 +241,48 @@ class ChessArenaDatabase {
         console.error('Error fetching room from PG:', err);
       }
     }
+
+    // 3. Fallback to local memory cache
     return this.memoryCache.rooms[roomId] || null;
   }
 
   public async saveMatch(match: PersistedMatch): Promise<void> {
+    // 1. Update in-memory & local disk
     this.memoryCache.matches[match.matchId] = match;
     this.saveToDisk();
 
+    // 2. Persist to Supabase if configured
+    if (this.supabase) {
+      try {
+        const { error } = await this.supabase
+          .from('arena_matches')
+          .upsert(
+            {
+              match_id: match.matchId,
+              room_id: match.roomId,
+              white_player: match.whitePlayer,
+              black_player: match.blackPlayer,
+              status: match.status,
+              winner: match.winner,
+              reason: match.reason,
+              start_time: match.startTime,
+              end_time: match.endTime,
+              moves: match.moves,
+              pgn: match.pgn,
+              fen: match.fen,
+            },
+            { onConflict: 'match_id' }
+          );
+
+        if (error) {
+          console.error('Error persisting match to Supabase:', error.message);
+        }
+      } catch (err) {
+        console.error('Supabase saveMatch error:', err);
+      }
+    }
+
+    // 3. Persist to direct PostgreSQL if configured
     if (this.pgPool) {
       try {
         await this.pgPool.query(
@@ -195,6 +313,37 @@ class ChessArenaDatabase {
   }
 
   public async getMatch(matchId: string): Promise<PersistedMatch | null> {
+    // 1. Try Supabase
+    if (this.supabase) {
+      try {
+        const { data, error } = await this.supabase
+          .from('arena_matches')
+          .select('*')
+          .eq('match_id', matchId)
+          .maybeSingle();
+
+        if (data && !error) {
+          return {
+            matchId: data.match_id,
+            roomId: data.room_id,
+            whitePlayer: data.white_player,
+            blackPlayer: data.black_player,
+            status: data.status,
+            winner: data.winner,
+            reason: data.reason,
+            startTime: data.start_time ? Number(data.start_time) : null,
+            endTime: data.end_time ? Number(data.end_time) : null,
+            moves: data.moves || [],
+            pgn: data.pgn || '',
+            fen: data.fen || '',
+          };
+        }
+      } catch (err) {
+        console.error('Supabase getMatch error:', err);
+      }
+    }
+
+    // 2. Try direct PostgreSQL
     if (this.pgPool) {
       try {
         const res = await this.pgPool.query(`SELECT * FROM arena_matches WHERE match_id = $1`, [matchId]);
@@ -219,6 +368,8 @@ class ChessArenaDatabase {
         console.error('Error fetching match from PG:', err);
       }
     }
+
+    // 3. Fallback to local memory cache
     return this.memoryCache.matches[matchId] || null;
   }
 
@@ -229,7 +380,20 @@ class ChessArenaDatabase {
   public getAllRooms(): PersistedRoom[] {
     return Object.values(this.memoryCache.rooms);
   }
+
+  public getStatus(): DbStatusInfo {
+    const hasSupabase = !!this.supabase;
+    const hasPg = !!this.pgPool;
+
+    return {
+      provider: hasSupabase ? 'supabase' : hasPg ? 'postgresql' : 'local',
+      supabaseConnected: hasSupabase,
+      pgConnected: hasPg,
+      localPath: this.localDbPath,
+      cachedRooms: Object.keys(this.memoryCache.rooms).length,
+      cachedMatches: Object.keys(this.memoryCache.matches).length,
+    };
+  }
 }
 
 export const db = new ChessArenaDatabase();
-

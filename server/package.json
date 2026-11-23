@@ -6,9 +6,11 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:supabase": "tsx scripts/test-supabase.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.2",
     "bcryptjs": "^2.4.3",
     "chess.js": "^1.0.0-beta.9",
     "cors": "^2.8.5",

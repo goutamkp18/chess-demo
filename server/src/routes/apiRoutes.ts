@@ -10,6 +10,15 @@ export function createApiRouter(roomManager: RoomManager) {
     res.json({ status: 'ok', service: 'Chess Arena API', timestamp: Date.now() });
   });
 
+  // Database Connection Status
+  router.get('/database/status', (_req, res) => {
+    res.json({
+      status: 'ok',
+      database: db.getStatus(),
+      timestamp: Date.now(),
+    });
+  });
+
   // Create Room (Tournament API)
   router.post('/rooms', async (req, res) => {
     try {
