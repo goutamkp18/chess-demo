@@ -2,7 +2,7 @@
   "name": "chess-arena",
   "version": "1.0.0",
   "private": true,
-  "description": "Production-quality Real-Time Multiplayer Chess Application",
+  "description": "Production-quality Real-Time Multiplayer Chess Application with Tournament Analytics Integration",
   "workspaces": [
     "client",
     "server"
@@ -10,9 +10,13 @@
   "scripts": {
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
+    "dev:arena": "npm run dev --prefix client",
+    "dev:tournament": "npm run dev --prefix tournament/client",
+    "dev:tournament-server": "npm run dev --prefix tournament/server",
     "dev": "npm run dev:server",
     "build:client": "npm run build --prefix client",
     "build:server": "npm run build --prefix server",
+    "build:tournament": "npm run build --prefix tournament/client",
     "build": "npm run build:server && npm run build:client",
     "test:server": "npm run test --prefix server",
     "test": "npm run test:server",
@@ -29,4 +33,3 @@
   "author": "Chess Arena Team",
   "license": "ISC"
 }
-

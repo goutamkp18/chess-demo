@@ -34,14 +34,40 @@ export const MatchEntry: React.FC<MatchEntryProps> = ({ onJoin }) => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const urlRoomId = params.get('roomId') || params.get('room');
+      const urlPassword = params.get('password') || params.get('pass') || params.get('pwd');
       const urlPlayer = params.get('player') || params.get('name');
       const urlRating = params.get('rating');
+      const autoJoin = params.get('autoJoin') === 'true' || params.get('auto') === 'true';
 
-      if (urlRoomId) setRoomId(urlRoomId.trim());
-      if (urlPlayer) setPlayerName(urlPlayer.trim());
-      if (urlRating && !isNaN(Number(urlRating))) setRating(Number(urlRating));
+      const finalRoom = urlRoomId ? urlRoomId.trim() : '';
+      const finalPass = urlPassword ? urlPassword.trim() : '';
+      const finalPlayer = urlPlayer ? urlPlayer.trim() : '';
+      const finalRating = urlRating && !isNaN(Number(urlRating)) ? Number(urlRating) : 1600;
+
+      if (finalRoom) setRoomId(finalRoom);
+      if (finalPass) setPassword(finalPass);
+      if (finalPlayer) setPlayerName(finalPlayer);
+      if (finalRating) setRating(finalRating);
+
+      // Automatic seamless join when redirected from Tournament website
+      if (autoJoin && finalRoom && finalPass && finalPlayer) {
+        setLoading(true);
+        soundManager.playClick();
+        onJoin({
+          roomId: finalRoom.toUpperCase(),
+          password: finalPass,
+          playerName: finalPlayer,
+          rating: finalRating,
+          timeControl: TIME_CONTROLS[0],
+        }).then((res) => {
+          setLoading(false);
+          if (!res.success) {
+            setErrorMessage(res.error || 'Failed to authenticate tournament match.');
+          }
+        });
+      }
     }
-  }, []);
+  }, [onJoin]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

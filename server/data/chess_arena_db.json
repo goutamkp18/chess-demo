@@ -1,5 +1,16 @@
 {
   "rooms": {
+    "101": {
+      "roomId": "101",
+      "passwordHash": "$2a$10$UxLx4dNGUo9h3YjyO5eVv.Ns1kx6P0tPgtiNeoKG.3aN3ZFogrbDq",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1795401177242,
+      "status": "WAITING_FOR_OPPONENT"
+    },
     "861": {
       "roomId": "861",
       "passwordHash": "$2a$10$HMttXXpO.ow4VRqIGG791.wedlP0qP8rdRhnxehtU7w1ZVdIpPgAm",
@@ -185,6 +196,17 @@
         "name": "10 + 5 Blitz"
       },
       "createdAt": 1793508219095,
+      "status": "WAITING_FOR_OPPONENT"
+    },
+    "ARENA101": {
+      "roomId": "ARENA101",
+      "passwordHash": "$2a$10$lOyZUiRXOXmyFwXLQ9ZVkuUUDona4hUnydP/o9aB3grivo7Nc2gAG",
+      "timeControl": {
+        "initialSeconds": 600,
+        "incrementSeconds": 5,
+        "name": "10 + 5 Blitz"
+      },
+      "createdAt": 1795400193568,
       "status": "WAITING_FOR_OPPONENT"
     }
   },
@@ -453,6 +475,59 @@
       "moves": [],
       "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n *",
       "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    },
+    "match_ARENA101_1795400193568": {
+      "matchId": "match_ARENA101_1795400193568",
+      "roomId": "ARENA101",
+      "whitePlayer": {
+        "id": "p_1795400193571_soyy",
+        "name": "Aarav",
+        "rating": 1600
+      },
+      "blackPlayer": {
+        "id": "p_1795400200887_jvba",
+        "name": "Rohan",
+        "rating": 1600
+      },
+      "status": "COMPLETED",
+      "winner": "draw",
+      "reason": "mutual_agreement",
+      "startTime": 1795400205892,
+      "endTime": 1795400234892,
+      "moves": [
+        {
+          "from": "h2",
+          "to": "h4",
+          "piece": "p",
+          "color": "w",
+          "san": "h4",
+          "timeSpentMs": 90,
+          "fenAfter": "rnbqkbnr/pppppppp/8/8/7P/8/PPPPPPP1/RNBQKBNR b KQkq - 0 1",
+          "timestamp": 1795400214355
+        },
+        {
+          "from": "a7",
+          "to": "a5",
+          "piece": "p",
+          "color": "b",
+          "san": "a5",
+          "timeSpentMs": 26,
+          "fenAfter": "rnbqkbnr/1ppppppp/8/p7/7P/8/PPPPPPP1/RNBQKBNR w KQkq - 0 2",
+          "timestamp": 1795400222427
+        },
+        {
+          "from": "g1",
+          "to": "f3",
+          "piece": "n",
+          "color": "w",
+          "san": "Nf3",
+          "timeSpentMs": 161,
+          "fenAfter": "rnbqkbnr/1ppppppp/8/p7/7P/5N2/PPPPPPP1/RNBQKB1R b KQkq - 1 2",
+          "timestamp": 1795400226754
+        }
+      ],
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. h4 a5 2. Nf3 *",
+      "fen": "rnbqkbnr/1ppppppp/8/p7/7P/5N2/PPPPPPP1/RNBQKB1R b KQkq - 1 2"
     }
   }
 }
